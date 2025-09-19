@@ -1,0 +1,739 @@
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: "Zain", sans-serif;
+    scroll-behavior: smooth;
+    direction: rtl;
+}
+
+::selection{
+    background-color: #256358;
+    color: #fff;
+}
+
+#Quran {
+    font-family: "Amiri", serif;
+    font-size: 2.1rem;
+    margin: 3vh;
+}
+
+/* ---------- Preloader ---------- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 32, 44, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: 6px solid transparent;
+    border-top-color: #256358;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #214e69;
+    border-radius: 50%;
+    top: -10px;
+    left: -10px;
+    animation: orbit 1s linear infinite;
+}
+
+.loader::after {
+    background: #fff;
+    animation-delay: 0.5s;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbit {
+    0% {
+        transform: rotate(0deg) translateX(50px) rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg) translateX(50px) rotate(-360deg);
+    }
+}
+
+.header {
+    background-image: url(assets/Background/bk\ -\ h&f.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    position: relative;
+    z-index: 4;
+}
+
+.textBFooter {
+    position: relative;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    margin-bottom: 10vh;
+    text-align: center;
+}
+
+.footer {
+    background-image: url(assets/Background/bk\ -\ h&f.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer .link {
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.footer .link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 3px;
+    height: 3px;
+    width: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+    color: #fff;
+}
+
+.footer .link:hover::after {
+    width: 100%;
+}
+
+.footer h2 {
+    margin: 0;
+    color: white;
+    margin-top: 3vh;
+}
+
+.footer h3 {
+    margin-top: 0.1vh;
+    margin-bottom: 3vh;
+}
+
+.blackMate {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    opacity: 1;
+    transition: 0.5s ease;
+}
+
+.blackMate.close {
+    opacity: 0;
+    z-index: -100;
+}
+
+/* ----------------------------------------------------------- Desktop Header */
+
+.desktopHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    padding: 4vh 12vh;
+}
+
+.phoneHeader {
+    display: none;
+}
+
+.header img {
+    width: 8rem;
+}
+
+.linksMoreZekr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.linksMoreZekr .moreAzkar {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.linksMoreZekr .moreAzkar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.linksMoreZekr .moreAzkar:hover::after {
+    width: 100%;
+}
+
+.linksMoreZekr .moreAzkar:hover {
+    transform: scale(1.13);
+}
+
+
+/* ----------------------------------------------------------- Desktop Header */
+
+.text {
+    position: relative;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2.5rem;
+}
+
+.text h4 {
+    margin-top: -2vh;
+    font-family: "Amiri", serif;
+    font-weight: 400;
+}
+
+.text h5 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* ---------------------------------------------- */
+
+.secName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.secName h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 10vh;
+}
+
+.secName h3 {
+    margin-top: -2.2vh;
+    font-weight: 500;
+}
+
+.box {
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    height: 80vh;
+    width: 90%;
+    margin: -1vh;
+    margin-bottom: 10vh;
+    background-image: url(assets/Background/bk\ -\ box.png);
+    font-size: 1.3rem;
+}
+
+.zekr {
+    margin: 0vh 3vh;
+}
+
+.zekr h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.zekr h2 {
+    font-size: 2.7rem;
+    font-weight: 700;
+}
+
+.srcZekr {
+    position: relative;
+}
+
+.infoBtn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+
+.infoBtn.deactive {
+    opacity: 0;
+    transform: rotateY(90deg);
+    transition: 0.5s ease;
+}
+
+.sourceHidden {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+    transform: rotateY(90deg);
+    z-index: 1;
+    font-weight: 400;
+}
+
+.sourceHidden.active {
+    opacity: 1;
+    transform: rotateY(0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.doneBtn.deactive {
+    opacity: 0;
+    transition: 0.4s ease;
+    /* transform: rotateY(90deg); */
+    transform: translateY(-50px);
+}
+
+.doneBtn {
+    opacity: 1;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: white;
+    margin-top: 0.5rem;
+    transition: 0.4s ease;
+    /* transform: rotateY(0deg); */
+    transform: translateY(0px);
+}
+
+/* -------------------------------------------------------------------------------- menu */
+
+.menuElements {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    clip-path: inset(0 100% 0 0);
+    transition: 0.3s ease;
+}
+
+.menuElements.show {
+    clip-path: inset(0 0 0 0);
+    z-index: 3;
+}
+
+.menuElements a {
+    text-decoration: none;
+    font-weight: 800;
+    color: #256358;
+    display: block;
+    padding: 15px;
+    transition: 0.3s ease;
+}
+
+.menuElements a:hover {
+    background-color: #256358;
+    color: white;
+}
+
+.menu {
+    display: none;
+}
+
+.menuX {
+    display: none;
+}
+
+.menuX a {
+    color: white;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    padding: 0px 1px;
+}
+
+.menuX.show {
+    display: block;
+}
+
+/* -------------------------------------------- */
+
+.headElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    margin: 4.2vh;
+}
+
+.headElements i {
+    font-size: 1.4rem;
+}
+
+/* -------------------------------------------- */
+
+/* Small Phones */
+@media (max-width: 480px) {
+    .desktopHeader {
+        display: none;
+    }
+
+    #Quran {
+        font-family: "Amiri", serif;
+        font-size: 1.1rem;
+        margin: 3vh;
+    }
+
+    .phoneHeader {
+        display: block;
+    }
+
+    .logoImgPhone {
+        display: block;
+    }
+
+    .header img {
+        height: 7vh;
+        width: auto;
+    }
+
+    /* ------------------------------------------------- */
+
+    .linksMoreZekr {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .menu.close {
+        display: none;
+    }
+
+    .menu a {
+        color: white;
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+    }
+
+    /* ------------------------------------------------- */
+
+    .text {
+        position: relative;
+        width: 90%;
+    }
+
+    .text h4 {
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .text h5 {
+        font-size: 0.66rem;
+    }
+
+    .secName h2 {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .secName h3 {
+        margin-top: -4vh;
+        margin-bottom: 1vh;
+        font-weight: 500;
+    }
+
+    .smlNum {
+        width: 110px;
+        height: 60px;
+        font-size: 1rem;
+    }
+
+    .smlNum.deactive {
+        width: 90px;
+        height: 55px;
+        font-size: 0.7rem;
+    }
+
+    span {
+        font-size: 1.9rem;
+    }
+
+    /* ------------------------------------ */
+
+    .srcZekr {
+        position: relative;
+    }
+
+    .infoBtn {
+        font-size: 1.3rem;
+    }
+
+    .sourceHidden {
+        font-weight: 400;
+        font-size: 0.8rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .sourceHidden.active {
+        font-weight: 400;
+        font-size: 0.8rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .doneBtn {
+        font-size: 1rem;
+    }
+
+    /* ------------------------------------------- */
+
+    .box {
+        height: 500px;
+        width: 330px;
+        justify-content: center;
+        margin: 0;
+        margin-bottom: 7vh;
+    }
+
+    .zekr h4 {
+        font-size: 0.7rem;
+    }
+
+    .zekr h2 {
+        font-size: 1.5rem;
+        margin-top: -0.5vh;
+    }
+
+    .textBFooter h4 {
+        font-size: 1rem;
+    }
+
+    .footer h2 {
+        font-size: 1rem;
+    }
+
+    .footer h3 {
+        font-size: 0.8rem;
+    }
+}
+
+/* Tablets */
+
+@media (max-width: 768px) and (min-width: 481px) {
+    .desktopHeader {
+        display: none;
+    }
+
+    .logoImgPhone {
+        display: block;
+    }
+
+    .header img {
+        height: 7vh;
+        width: auto;
+    }
+
+    .linksMoreZekr {
+        display: none;
+    }
+
+    .menuElements {
+        display: block;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .menu.close {
+        display: none;
+    }
+
+    .menu a {
+        color: white;
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+    }
+
+    /* ------------------------------------------------- */
+
+    .text {
+        position: relative;
+        width: 90%;
+    }
+
+    .text h4 {
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .text h5 {
+        font-weight: 700;
+        margin-top: -3vh;
+        margin-bottom: 3.5vh;
+        font-size: 0.66rem;
+    }
+
+    .smlNum {
+        width: 110px;
+        height: 60px;
+        font-size: 1rem;
+    }
+
+    .smlNum.deactive {
+        width: 90px;
+        height: 55px;
+        font-size: 0.7rem;
+    }
+
+    span {
+        font-size: 1.9rem;
+    }
+
+    /* ------------------------------ */
+
+    .srcZekr {
+        position: relative;
+    }
+
+    .infoBtn {
+        font-size: 1.5rem;
+    }
+
+    .sourceHidden {
+        margin-top: 1vh;
+        font-weight: 400;
+        font-size: 0.8rem;
+        margin: 6vh;
+    }
+
+    .sourceHidden.active {
+        margin-top: 1vh;
+        font-weight: 400;
+        font-size: 0.8rem;
+        margin: 6vh;
+    }
+
+    .doneBtn {
+        font-size: 1rem;
+    }
+
+    /* ------------------------------ */
+
+    .secName h2 {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .secName h3 {
+        margin-top: -3vh;
+        margin-bottom: 1vh;
+        font-weight: 500;
+    }
+
+    .box {
+        height: 570px;
+        width: 410px;
+        justify-content: center;
+        margin: 0;
+        margin-bottom: 8vh;
+    }
+
+    .zekr h2 {
+        font-size: 2rem;
+        margin-top: -0.5vh;
+    }
+
+    .zekr h4 {
+        font-size: 0.8rem;
+    }
+
+    .zekr h2 {
+        font-size: 1.6rem;
+    }
+
+    .textBFooter h4 {
+        font-size: 1rem;
+    }
+
+    .footer h2 {
+        font-size: 1rem;
+    }
+
+    .footer h3 {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .logoImgPhone {
+        display: none;
+    }
+}
