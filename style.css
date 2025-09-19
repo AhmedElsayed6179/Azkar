@@ -677,7 +677,7 @@ span.deactive {
     z-index: 3;
     clip-path: inset(0 100% 0 0);
     transition: 0.3s ease;
-    color: #1f584e;
+    color: black;
 }
 
 .infoElements.show {
@@ -700,7 +700,7 @@ span.deactive {
 .icons a {
     font-size: 1.4rem;
     padding: 5px;
-    color: #1f584e;
+    color: black;
     transition: 0.5s ease;
 }
 
@@ -1143,4 +1143,5 @@ span.deactive {
     .leftMenu {
         display: none;
     }
+
 }
