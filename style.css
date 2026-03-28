@@ -566,74 +566,74 @@ body.night-mode .site-header {
     0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* ── Top row: Logo + centered nav + Action buttons ── */
+/* ── Single row: Logo | Nav (centered) | Share btn ── */
 .header-inner {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 28px;
-  height: 68px;
-  display: flex;
+  padding: 0 20px;
+  height: 62px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  position: relative;
+  gap: 12px;
 }
 
 /* ── Centered Inline Nav (web only) ── */
 .header-nav-inline {
   display: flex;
   align-items: center;
-  gap: 2px;
-  flex: 1;
   justify-content: center;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
-  padding: 4px 6px;
-  margin: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  max-width: 900px;
+  gap: 1px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 4px;
+}
+
+.header-nav-inline::-webkit-scrollbar {
+  display: none;
 }
 
 .header-nav-inline a {
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
-  padding: 6px 11px;
-  border-radius: 8px;
-  font-size: 0.78rem;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-size: 0.76rem;
   font-weight: 600;
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
   white-space: nowrap;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 5px;
-  letter-spacing: 0.01em;
+  gap: 4px;
   position: relative;
 }
 
 .header-nav-inline a i {
-  font-size: 0.68rem;
-  opacity: 0.7;
+  font-size: 0.65rem;
+  opacity: 0.75;
   transition: opacity 0.2s;
 }
 
 .header-nav-inline a::after {
   content: '';
   position: absolute;
-  bottom: 2px;
-  left: 8px;
-  right: 8px;
+  bottom: 1px;
+  left: 6px;
+  right: 6px;
   height: 1.5px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   border-radius: 2px;
   transform: scaleX(0);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-origin: center;
 }
 
 .header-nav-inline a:hover {
-  background: rgba(255, 255, 255, 0.09);
-  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.10);
+  color: #fff;
 }
 
 .header-nav-inline a:hover i {
@@ -646,7 +646,7 @@ body.night-mode .site-header {
 
 .header-nav-inline a.active {
   color: var(--gold-light);
-  background: rgba(201, 168, 76, 0.12);
+  background: rgba(201, 168, 76, 0.13);
   font-weight: 700;
   border-bottom: 2px solid var(--gold);
 }
@@ -2202,35 +2202,39 @@ body.night-mode .dyk-dot.active {
 
 /* ===== Responsive ===== */
 
-/* Medium screens — shrink nav font */
-@media (max-width: 1100px) and (min-width: 769px) {
+/* Medium screens 900–1200px — shrink font slightly */
+@media (max-width: 1200px) and (min-width: 769px) {
   .header-nav-inline a {
-    font-size: 0.72rem;
-    padding: 5px 8px;
-    gap: 4px;
+    font-size: 0.71rem;
+    padding: 5px 7px;
+    gap: 3px;
   }
 
   .header-nav-inline a i {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
   }
 
   .header-inner {
-    padding: 0 18px;
+    padding: 0 14px;
+    gap: 8px;
   }
 }
 
-/* Small screens — hide labels keep icons */
+/* Smaller screens 769–900px — icons only, no text */
 @media (max-width: 900px) and (min-width: 769px) {
-
-  .header-nav-inline a span,
   .header-nav-inline a {
     font-size: 0;
-    padding: 7px 9px;
+    padding: 7px 8px;
+    gap: 0;
   }
 
   .header-nav-inline a i {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     opacity: 1;
+  }
+
+  .header-nav-sep {
+    display: none;
   }
 }
 
