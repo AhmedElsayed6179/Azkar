@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أذكار | أذكار الصلاة</title>
+  <!-- ═══ Primary Meta ═══ -->
+  <meta name="description" content="أذكار الصلاة الصحيحة الثابتة عن النبيﷺ — أذكار ما قبل الصلاة وبعدها والتسبيح والاستغفار." />
+  <meta name="author" content="أحمد السيد" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ahmedelsayed6179.github.io/Azkar/azkar-salah.html" />
+
+  <!-- ═══ Open Graph ═══ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="أذكار" />
+  <meta property="og:title" content="أذكار | أذكار الصلاة" />
+  <meta property="og:description" content="أذكار الصلاة الصحيحة الثابتة عن النبيﷺ — أذكار ما قبل الصلاة وبعدها والتسبيح والاستغفار." />
+  <meta property="og:url" content="https://ahmedelsayed6179.github.io/Azkar/azkar-salah.html" />
+  <meta property="og:image" content="https://ahmedelsayed6179.github.io/Azkar/assets/Background/Cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ar_EG" />
+
+  <!-- ═══ Twitter Card ═══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="أذكار | أذكار الصلاة" />
+  <meta name="twitter:description" content="أذكار الصلاة الصحيحة الثابتة عن النبيﷺ — أذكار ما قبل الصلاة وبعدها والتسبيح والاستغفار." />
+  <meta name="twitter:image" content="https://ahmedelsayed6179.github.io/Azkar/assets/Background/Cover.png" />
+
+  <!-- ═══ Mobile ═══ -->
+  <meta name="theme-color" content="#1a4731" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="أذكار" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+  <link rel="icon" href="assets/Background/Azkar-Icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="preloader">
+  <div class="loader-bismillah">بِسْمِ اللهِ</div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">أذكار</div>
+</div>
+
+
+<!-- Reset Modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <div class="modal-icon"><i class="fa-solid fa-rotate-left"></i></div>
+    <div class="modal-title">إعادة تعيين الأذكار</div>
+    <div class="modal-desc">هل تريد إعادة قراءة جميع الأذكار من البداية؟ سيتم حذف تقدمك الحالي.</div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="modalCancel">إلغاء</button>
+      <button class="modal-confirm" id="modalConfirm"><i class="fa-solid fa-rotate-left"></i> إعادة تعيين</button>
+    </div>
+  </div>
+</div>
+
+<div class="alert-toast" id="alertToast"><i class="fa-solid fa-circle-check"></i> تم</div>
+
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer-panel">
+    <div class="drawer-header">
+      <span class="drawer-header-title">قائمة الأذكار</span>
+      <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-x"></i></button>
+    </div>
+    <div class="drawer-nav">
+      <a href="index.html"><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
+      <a href="azkar-salah.html"><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
+      <a href="azkar-food.html"><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
+      <a href="azkar-sleep.html"><i class="fa-solid fa-moon"></i> أذكار النوم</a>
+      <a href="azkar-home.html"><i class="fa-solid fa-house"></i> أذكار المنزل</a>
+      <a href="azkar-daily.html"><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
+      <a href="azkar-children.html"><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
+      <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
+      <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
+      <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+    </div>
+    <div class="drawer-divider"></div>
+    <div class="drawer-info">
+      <div class="drawer-info-card">
+        <h3>موقع أذكار</h3>
+        <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ</p>
+        <div class="drawer-social">
+          <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+          <a href="mailto:ahmedelsayed6179@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="header-logo" href="index.html">
+      <img src="assets/Background/Azkar-Icon.png" alt="أذكار" />
+      <span class="header-page-name">أذكار الصلاة</span>
+    </a>
+    
+    <div class="header-actions">
+      <button class="icon-btn" id="shareLinkBtn"><i class="fa-solid fa-link"></i></button>
+      <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div class="header-nav-strip">
+    <nav class="header-nav">
+      <a href="index.html" ><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
+      <a href="azkar-salah.html" class="active"><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
+      <a href="azkar-food.html" ><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
+      <a href="azkar-sleep.html" ><i class="fa-solid fa-moon"></i> أذكار النوم</a>
+      <a href="azkar-home.html" ><i class="fa-solid fa-house"></i> أذكار المنزل</a>
+      <a href="azkar-daily.html" ><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
+      <a href="azkar-children.html" ><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
+      <a href="azkar-travel.html" ><i class="fa-solid fa-plane"></i> أذكار السفر</a>
+      <a href="azkar-sick.html" ><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
+      <a href="prayer-times.html" ><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sub-hero">
+  <div class="category-badge"><i class="fa-solid fa-mosque"></i></div>
+  <div class="sub-hero-icon"><i class="fa-solid fa-mosque"></i></div>
+  <h1 class="sub-hero-title">أذكار الصلاة</h1>
+  <p class="sub-hero-desc">الأذكار الصحيحة الثابتة عن النبيﷺ قبل الصلاة وبعدها</p>
+  <div class="sub-hero-divider"></div>
+</div>
+
+
+<!-- Sub-page Progress -->
+<div class="sub-progress-section">
+  <div class="sub-progress-card">
+    <div class="sub-progress-info">
+      <div class="sub-progress-label">أذكار الصلاة</div>
+      <div class="sub-progress-bar-wrap">
+        <div class="sub-progress-bar-fill" id="subProgressFill"></div>
+      </div>
+    </div>
+    <div class="sub-progress-count" id="subProgressCount">0 / 0</div>
+    <button class="sub-reset-btn" id="subResetBtn">
+      <i class="fa-solid fa-rotate-left"></i>
+      إعادة التعيين
+    </button>
+  </div>
+</div>
+
+<main class="azkar-section">
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر عند سماع المؤذن</h4>
+        <h2>ردد خلف المؤذن ما يقول</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>إذا سمعتم المؤذن فقولوا مثل ما يقول</span>
+          <span class="source-tag">صحيح البخاري ومسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>دعاء سماع الأذان</h4>
+        <h2>اللهمَّ ربَّ هذه الدعوةِ التامَّةِ والصلاةِ القائمةِ، آتِ محمدًا الوسيلةَ والفضيلةَ، وابعثْهُ مقامًا محمودًا الذي وعدتَه.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>من قالها حين يسمع النداء حلَّت له شفاعتي يوم القيامة</span>
+          <span class="source-tag">صحيح البخاري</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر الاستفتاح</h4>
+        <h2>اللهمَّ إني أعوذُ بك من الشيطان الرجيم.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>دعاء الاستفتاح</h4>
+        <h2>سبحانك اللهمَّ وبحمدك وتبارك اسمك وتعالى جدُّك ولا إله غيرك.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">سنن أبي داود</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر الركوع</h4>
+        <h2>سُبْحانَ ربِّيَ العَظيم.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">3</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر الرفع من الركوع</h4>
+        <h2>سمعَ اللهُ لمن حمِدَه، ربَّنا ولكَ الحمد حمدًا كثيرًا طيِّبًا مباركًا فيه.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح البخاري</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر السجود</h4>
+        <h2>سُبْحانَ ربِّيَ الأعلى.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">3</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر الجلسة بين السجدتين</h4>
+        <h2>ربِّ اغفر لي، ربِّ اغفر لي.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">3</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">سنن أبن ماجه</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>الصلاة على النبيﷺ في التشهد</h4>
+        <h2>اللهمَّ صلِّ على محمد وعلى آل محمد، كما صليتَ على إبراهيم وعلى آل إبراهيم، إنك حميدٌ مجيد.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح البخاري</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>التعوذ قبل السلام</h4>
+        <h2>اللهم إني أعوذُ بك من عذاب جهنَّم، ومن عذاب القبر، ومن فتنة المحيا والممات، ومن شرِّ فتنة المسيح الدجَّال.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>يُستعاذُ بهنَّ في الصلاة قبل التسليم</span>
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر بعد السلام</h4>
+        <h2>أستغفر الله — ثلاثاً — اللهمَّ أنت السلام ومنك السلام تباركتَ يا ذا الجلال والإكرام.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>من قالها دبر كل صلاة مكتوبة</span>
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر دبر الصلاة</h4>
+        <h2>لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح البخاري</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>تسبيح وتحميد وتكبير دبر الصلاة</h4>
+        <h2>سبحان الله — ٣٣ مرة، الحمد لله — ٣٣ مرة، الله أكبر — ٣٣ مرة، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>من قالها غُفرت خطاياه وإن كانت مثل زبد البحر</span>
+          <span class="source-tag">صحيح مسلم</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>آية الكرسي دبر الصلاة</h4>
+        <h2>آية الكرسي — بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم: ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ...</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>من قرأ آية الكرسي دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت</span>
+          <span class="source-tag">النسائي وصححه الألباني</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>دعاء دبر الصلاة</h4>
+        <h2>اللهمَّ أعنِّي على ذكرك وشُكرك وحُسنِ عبادتك.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>أوصى به النبيﷺ معاذًا رضي الله عنه أن يقوله دبر كل صلاة</span>
+          <span class="source-tag">صحيح أبي داود</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>ذكر خاص بعد المغرب والفجر</h4>
+        <h2>لا إله إلا الله وحده لا شريك له، له الملك وله الحمد يُحيي ويُميت وهو على كل شيء قدير — عشر مرات بعد المغرب والفجر.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">10</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span class="source-tag">صحيح الترمذي</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="zekr">
+        <h4>دعاء ما بعد صلاة الفجر</h4>
+        <h2>اللهمَّ إني أسألك علمًا نافعًا، ورزقًا طيِّبًا، وعملًا متقَبَّلًا.</h2>
+      </div>
+      <div class="counter-area">
+        <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
+        <div class="done-check"><i class="fa-solid fa-circle-check"></i> تم</div>
+      </div>
+      <div class="srcZekr">
+        <i class="fa-solid fa-circle-info infoBtn"></i>
+        <div class="sourceHidden">
+          <span>يُقال بعد صلاة الفجر</span>
+          <span class="source-tag">صحيح ابن ماجه</span>
+          <i class="fa-solid fa-circle-check doneBtn deactive"></i>
+        </div>
+      </div>
+    </div></main>
+
+<!-- Did You Know Section -->
+<div class="dyk-section" id="dykSection">
+  <div class="dyk-card">
+    <div class="dyk-card-header">
+      <div class="dyk-header-left">
+        <div class="dyk-header-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <span class="dyk-header-title" id="dykLabel">هل تعرف؟ — أذكار يومية</span>
+      </div>
+      <div class="dyk-timer-badge">
+        <span class="dyk-timer-dot"></span>
+        <span id="dykTimerText">15:00</span>
+      </div>
+    </div>
+    <div class="dyk-card-body">
+      <div class="dyk-text" id="dykText">جاري التحميل...</div>
+      <span class="dyk-source" id="dykSource"></span>
+    </div>
+    <div class="dyk-card-footer">
+      <a class="dyk-link" href="index.html" id="dykLink">
+        <i class="fa-solid fa-arrow-left"></i>
+        اقرأ الأذكار
+      </a>
+      <div class="dyk-dots" id="dykDots"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-du3a">تقبل الله منا ومنكم صالح الأعمال</div>
+  <div>تصميم وتطوير: <a href="https://ahmedelsayed6179.github.io/Ahmed-Websites/" target="_blank">أحمد محمد</a> &nbsp;|&nbsp; جميع الحقوق محفوظة © <span id="footerYear"></span></div>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+<script src="script.js"></script>
+</body>
+</html>
