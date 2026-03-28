@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,126 +36,131 @@
   <link rel="icon" href="assets/Background/Azkar-Icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<div id="preloader">
-  <div class="loader-bismillah">بِسْمِ اللهِ</div>
-  <div class="loader-ring"></div>
-  <div class="loader-text">أذكار</div>
-</div>
+  <div id="preloader">
+    <div class="loader-bismillah">بِسْمِ اللهِ</div>
+    <div class="loader-ring"></div>
+    <div class="loader-text">أذكار</div>
+  </div>
 
 
-<!-- Reset Modal -->
-<div class="modal-overlay" id="resetModal">
-  <div class="modal-box">
-    <div class="modal-icon"><i class="fa-solid fa-rotate-left"></i></div>
-    <div class="modal-title">إعادة تعيين الأذكار</div>
-    <div class="modal-desc">هل تريد إعادة قراءة جميع الأذكار من البداية؟ سيتم حذف تقدمك الحالي.</div>
-    <div class="modal-actions">
-      <button class="modal-cancel" id="modalCancel">إلغاء</button>
-      <button class="modal-confirm" id="modalConfirm"><i class="fa-solid fa-rotate-left"></i> إعادة تعيين</button>
+  <!-- Reset Modal -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-box">
+      <div class="modal-icon"><i class="fa-solid fa-rotate-left"></i></div>
+      <div class="modal-title">إعادة تعيين الأذكار</div>
+      <div class="modal-desc">هل تريد إعادة قراءة جميع الأذكار من البداية؟ سيتم حذف تقدمك الحالي.</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" id="modalCancel">إلغاء</button>
+        <button class="modal-confirm" id="modalConfirm"><i class="fa-solid fa-rotate-left"></i> إعادة تعيين</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="alert-toast" id="alertToast"><i class="fa-solid fa-circle-check"></i> تم</div>
+  <div class="alert-toast" id="alertToast"><i class="fa-solid fa-circle-check"></i> تم</div>
 
-<div class="mobile-drawer" id="mobileDrawer">
-  <div class="drawer-overlay" id="drawerOverlay"></div>
-  <div class="drawer-panel">
-    <div class="drawer-header">
-      <span class="drawer-header-title">قائمة الأذكار</span>
-      <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-x"></i></button>
-    </div>
-    <div class="drawer-nav">
-      <a href="index.html"><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
-      <a href="azkar-salah.html"><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
-      <a href="azkar-food.html"><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
-      <a href="azkar-sleep.html"><i class="fa-solid fa-moon"></i> أذكار النوم</a>
-      <a href="azkar-home.html"><i class="fa-solid fa-house"></i> أذكار المنزل</a>
-      <a href="azkar-daily.html"><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
-      <a href="azkar-children.html"><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
-      <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
-      <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
-      <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
-    </div>
-    <div class="drawer-divider"></div>
-    <div class="drawer-info">
-      <div class="drawer-info-card">
-        <h3>موقع أذكار</h3>
-        <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ</p>
-        <div class="drawer-social">
-          <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-          <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-          <a href="mailto:ahmedelsayed6179@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <span class="drawer-header-title">قائمة الأذكار</span>
+        <button class="drawer-close" id="drawerClose"><i class="fa-solid fa-x"></i></button>
+      </div>
+      <div class="drawer-nav">
+        <a href="index.html"><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
+        <a href="azkar-salah.html"><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
+        <a href="azkar-food.html"><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
+        <a href="azkar-sleep.html"><i class="fa-solid fa-moon"></i> أذكار النوم</a>
+        <a href="azkar-home.html"><i class="fa-solid fa-house"></i> أذكار المنزل</a>
+        <a href="azkar-daily.html"><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
+        <a href="azkar-children.html"><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
+        <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
+        <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
+        <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+      </div>
+      <div class="drawer-divider"></div>
+      <div class="drawer-info">
+        <div class="drawer-info-card">
+          <h3>موقع أذكار</h3>
+          <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ</p>
+          <div class="drawer-social">
+            <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="mailto:ahmedelsayed6179@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<header class="site-header">
-  <div class="header-inner">
-    <a class="header-logo" href="index.html">
-      <img src="assets/Background/Azkar-Icon.png" alt="أذكار" />
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="header-logo" href="index.html">
+        <img src="assets/Background/Azkar-Icon.png" alt="أذكار" />
+        <div class="header-logo-text">
+          <span class="header-logo-title">أذكار</span>
+          <span class="header-logo-sub">أذكار المسلم اليومية</span>
+        </div>
+      </a>
       <span class="header-page-name">أذكار السفر</span>
-    </a>
-    
-    <div class="header-actions">
-      <button class="icon-btn" id="shareLinkBtn"><i class="fa-solid fa-link"></i></button>
-      <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-
-  <div class="header-nav-strip">
-    <nav class="header-nav">
-      <a href="index.html" ><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
-      <a href="azkar-salah.html" ><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
-      <a href="azkar-food.html" ><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
-      <a href="azkar-sleep.html" ><i class="fa-solid fa-moon"></i> أذكار النوم</a>
-      <a href="azkar-home.html" ><i class="fa-solid fa-house"></i> أذكار المنزل</a>
-      <a href="azkar-daily.html" ><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
-      <a href="azkar-children.html" ><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
-      <a href="azkar-travel.html" class="active"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
-      <a href="azkar-sick.html" ><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
-      <a href="prayer-times.html" ><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
-    </nav>
-  </div>
-</header>
-
-<div class="sub-hero">
-  <div class="category-badge"><i class="fa-solid fa-plane"></i></div>
-  <div class="sub-hero-icon"><i class="fa-solid fa-plane"></i></div>
-  <h1 class="sub-hero-title">أذكار السفر</h1>
-  <p class="sub-hero-desc">الأذكار المشروعة عند السفر وركوب وسائل المواصلات والرجوع من السفر</p>
-  <div class="sub-hero-divider"></div>
-</div>
-
-
-<!-- Sub-page Progress -->
-<div class="sub-progress-section">
-  <div class="sub-progress-card">
-    <div class="sub-progress-info">
-      <div class="sub-progress-label">أذكار السفر</div>
-      <div class="sub-progress-bar-wrap">
-        <div class="sub-progress-bar-fill" id="subProgressFill"></div>
+      <div class="header-actions">
+        <button class="icon-btn" id="shareLinkBtn" title="مشاركة"><i class="fa-solid fa-link"></i></button>
+        <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
-    <div class="sub-progress-count" id="subProgressCount">0 / 0</div>
-    <button class="sub-reset-btn" id="subResetBtn">
-      <i class="fa-solid fa-rotate-left"></i>
-      إعادة التعيين
-    </button>
-  </div>
-</div>
+    <div class="header-nav-strip">
+      <nav class="header-nav">
+        <a href="index.html"><i class="fa-solid fa-sun"></i> أذكار الصباح والمساء</a>
+        <a href="azkar-salah.html"><i class="fa-solid fa-mosque"></i> أذكار الصلاة</a>
+        <a href="azkar-food.html"><i class="fa-solid fa-utensils"></i> أذكار الطعام</a>
+        <a href="azkar-sleep.html"><i class="fa-solid fa-moon"></i> أذكار النوم</a>
+        <a href="azkar-home.html"><i class="fa-solid fa-house"></i> أذكار المنزل</a>
+        <a href="azkar-daily.html"><i class="fa-solid fa-calendar-day"></i> أذكار يومية</a>
+        <a href="azkar-children.html"><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
+        <a href="azkar-travel.html" class="active"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
+        <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
+        <div class="header-nav-divider"></div>
+        <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+      </nav>
+    </div>
+  </header>
 
-<main class="azkar-section">
+  <div class="sub-hero">
+    <div class="category-badge"><i class="fa-solid fa-plane"></i></div>
+    <div class="sub-hero-icon"><i class="fa-solid fa-plane"></i></div>
+    <h1 class="sub-hero-title">أذكار السفر</h1>
+    <p class="sub-hero-desc">الأذكار المشروعة عند السفر وركوب وسائل المواصلات والرجوع من السفر</p>
+    <div class="sub-hero-divider"></div>
+  </div>
+
+
+  <!-- Sub-page Progress -->
+  <div class="sub-progress-section">
+    <div class="sub-progress-card">
+      <div class="sub-progress-info">
+        <div class="sub-progress-label">أذكار السفر</div>
+        <div class="sub-progress-bar-wrap">
+          <div class="sub-progress-bar-fill" id="subProgressFill"></div>
+        </div>
+      </div>
+      <div class="sub-progress-count" id="subProgressCount">0 / 0</div>
+      <button class="sub-reset-btn" id="subResetBtn">
+        <i class="fa-solid fa-rotate-left"></i>
+        إعادة التعيين
+      </button>
+    </div>
+  </div>
+
+  <main class="azkar-section">
 
     <div class="box">
       <div class="zekr">
         <h4>ذكر ركوب الدابة أو المركبة</h4>
-        <h2>الله أكبر، الله أكبر، الله أكبر — ثم: سبحان الذي سخَّر لنا هذا وما كنَّا له مُقرِنين وإنَّا إلى ربِّنا لمنقلبون.</h2>
+        <h2>الله أكبر، الله أكبر، الله أكبر — ثم: سبحان الذي سخَّر لنا هذا وما كنَّا له مُقرِنين وإنَّا إلى ربِّنا
+          لمنقلبون.</h2>
       </div>
       <div class="counter-area">
         <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
@@ -172,7 +178,8 @@
     <div class="box">
       <div class="zekr">
         <h4>دعاء السفر</h4>
-        <h2>اللهمَّ هوِّن علينا السفر واطوِ عنَّا بُعده، اللهمَّ أنت الصاحب في السفر والخليفة في الأهل، اللهمَّ إني أعوذ بك من وَعثاء السفر وكآبة المنظر وسوء المنقلب في المال والأهل.</h2>
+        <h2>اللهمَّ هوِّن علينا السفر واطوِ عنَّا بُعده، اللهمَّ أنت الصاحب في السفر والخليفة في الأهل، اللهمَّ إني أعوذ
+          بك من وَعثاء السفر وكآبة المنظر وسوء المنقلب في المال والأهل.</h2>
       </div>
       <div class="counter-area">
         <button class="smlNum"><span>0</span><span class="divider">/</span><span class="total">1</span></button>
@@ -333,41 +340,44 @@
           <i class="fa-solid fa-circle-check doneBtn deactive"></i>
         </div>
       </div>
-    </div></main>
+    </div>
+  </main>
 
-<!-- Did You Know Section -->
-<div class="dyk-section" id="dykSection">
-  <div class="dyk-card">
-    <div class="dyk-card-header">
-      <div class="dyk-header-left">
-        <div class="dyk-header-icon"><i class="fa-solid fa-lightbulb"></i></div>
-        <span class="dyk-header-title" id="dykLabel">هل تعرف؟ — أذكار يومية</span>
+  <!-- Did You Know Section -->
+  <div class="dyk-section" id="dykSection">
+    <div class="dyk-card">
+      <div class="dyk-card-header">
+        <div class="dyk-header-left">
+          <div class="dyk-header-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <span class="dyk-header-title" id="dykLabel">هل تعرف؟ — أذكار يومية</span>
+        </div>
+        <div class="dyk-timer-badge">
+          <span class="dyk-timer-dot"></span>
+          <span id="dykTimerText">15:00</span>
+        </div>
       </div>
-      <div class="dyk-timer-badge">
-        <span class="dyk-timer-dot"></span>
-        <span id="dykTimerText">15:00</span>
+      <div class="dyk-card-body">
+        <div class="dyk-text" id="dykText">جاري التحميل...</div>
+        <span class="dyk-source" id="dykSource"></span>
       </div>
-    </div>
-    <div class="dyk-card-body">
-      <div class="dyk-text" id="dykText">جاري التحميل...</div>
-      <span class="dyk-source" id="dykSource"></span>
-    </div>
-    <div class="dyk-card-footer">
-      <a class="dyk-link" href="index.html" id="dykLink">
-        <i class="fa-solid fa-arrow-left"></i>
-        اقرأ الأذكار
-      </a>
-      <div class="dyk-dots" id="dykDots"></div>
+      <div class="dyk-card-footer">
+        <a class="dyk-link" href="index.html" id="dykLink">
+          <i class="fa-solid fa-arrow-left"></i>
+          اقرأ الأذكار
+        </a>
+        <div class="dyk-dots" id="dykDots"></div>
+      </div>
     </div>
   </div>
-</div>
 
-<footer class="site-footer">
-  <div class="footer-du3a">تقبل الله منا ومنكم صالح الأعمال</div>
-  <div>تصميم وتطوير: <a href="https://ahmedelsayed6179.github.io/Ahmed-Websites/" target="_blank">أحمد محمد</a> &nbsp;|&nbsp; جميع الحقوق محفوظة © <span id="footerYear"></span></div>
-</footer>
+  <footer class="site-footer">
+    <div class="footer-du3a">تقبل الله منا ومنكم صالح الأعمال</div>
+    <div>تصميم وتطوير: <a href="https://ahmedelsayed6179.github.io/Ahmed-Websites/" target="_blank">أحمد محمد</a>
+      &nbsp;|&nbsp; جميع الحقوق محفوظة © <span id="footerYear"></span></div>
+  </footer>
 
-<button class="scroll-top" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
-<script src="script.js"></script>
+  <button class="scroll-top" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
+  <script src="script.js"></script>
 </body>
+
 </html>
