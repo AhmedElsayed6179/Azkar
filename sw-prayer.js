@@ -159,9 +159,12 @@ function firePrayerNotification(prayerKey, govName) {
       { action: 'dismiss', title: 'إغلاق' }
     ]
   }).then(function() {
-    // Ask page to refresh tomorrow's schedule
+    // Ask all open pages to play azan audio & refresh schedule
     return self.clients.matchAll({ includeUncontrolled: true }).then(function(clients) {
-      clients.forEach(function(c) { c.postMessage({ type: 'REFRESH_SCHEDULE' }); });
+      clients.forEach(function(c) {
+        c.postMessage({ type: 'PLAY_AZAN', prayerKey: prayerKey });
+        c.postMessage({ type: 'REFRESH_SCHEDULE' });
+      });
     });
   }).catch(function(err) { console.warn('[SW] notification failed:', err); });
 }

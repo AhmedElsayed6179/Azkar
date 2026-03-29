@@ -1941,7 +1941,7 @@
 
     <!-- Method note -->
     <p class="pt-note">
-      الحسابات بناءً على معيار رابطة العالم الإسلامي (MWL)
+      الحسابات بناءً على معيار هيئة المساحة المصرية (فجر 19.5° — عشاء 17.5°) — العصر: الحنفي
       &nbsp;•&nbsp;
       التوقيت الصيفي يُطبق تلقائياً (آخر جمعة أبريل ← آخر جمعة أكتوبر)
     </p>
@@ -2014,16 +2014,16 @@
         const tz = 0; // We return UTC
         const mid = 12 - lng / 15 - EqT;
 
-        // MWL: fajr 18°, isha 17°
-        const fajrAngle = 18, ishaAngle = 17;
+        // Egyptian General Authority of Survey: fajr 19.5°, isha 17.5°
+        const fajrAngle = 19.5, ishaAngle = 17.5;
         // Sunrise/sunset horizon angle (corrected for elevation)
         const horizAngle = 0.8333 + 0.0347 * Math.sqrt(elevation);
 
         const fajr = mid - computeTime(fajrAngle, 0, lat, d, EqT);
         const sunrise = mid - computeTime(horizAngle, 0, lat, d, EqT);
         const dhuhr = mid;
-        // Asr: Standard method (shadow factor 1)
-        const Dasr = asin(1 / (1 + tan(Math.abs(lat - d))));
+        // Asr: Hanafi method (shadow factor 2) — المعتمد في مصر ووزارة الأوقاف
+        const Dasr = asin(1 / (2 + tan(Math.abs(lat - d))));
         const asr = mid + computeTime(-Dasr, 0, lat, d, EqT);
         const maghrib = mid + computeTime(horizAngle, 0, lat, d, EqT);
         const isha = mid + computeTime(ishaAngle, 0, lat, d, EqT);
@@ -2099,13 +2099,14 @@
     // ── Time formatting ───────────────────────────────────────
     function fmtTime(utcDate, dst) {
       const off = dst ? 3 : 2;
-      const ms = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000 + off * 3600000;
+      // utcDate.getTime() is real UTC epoch — just add Egypt offset
+      const ms = utcDate.getTime() + off * 3600000;
       const d = new Date(ms);
-      const h24 = d.getHours();
-      const min = d.getMinutes().toString().padStart(2, '0');
+      const h24 = d.getUTCHours();
+      const min = d.getUTCMinutes().toString().padStart(2, '0');
       const ampm = h24 >= 12 ? 'م' : 'ص';
       const h12 = h24 % 12 || 12;
-      return { disp: `${h12}:${min}`, ampm, mins: h24 * 60 + d.getMinutes() };
+      return { disp: `${h12}:${min}`, ampm, mins: h24 * 60 + d.getUTCMinutes() };
     }
 
     // ── Qibla direction ───────────────────────────────────────
@@ -2139,9 +2140,9 @@
       const el = document.getElementById('nextPrayerCountdown');
       function tick() {
         const now = new Date();
-        const ms = now.getTime() + now.getTimezoneOffset() * 60000 + (dst ? 3 : 2) * 3600000;
+        const ms = now.getTime() + (dst ? 3 : 2) * 3600000;
         const loc = new Date(ms);
-        const cur = loc.getHours() * 3600 + loc.getMinutes() * 60 + loc.getSeconds();
+        const cur = loc.getUTCHours() * 3600 + loc.getUTCMinutes() * 60 + loc.getUTCSeconds();
         let diff = nextMins * 60 - cur;
         if (diff < 0) diff += 86400;
         const h = Math.floor(diff / 3600);
@@ -2180,8 +2181,8 @@
         isha: fmtTime(pt.isha, dst),
       };
 
-      // Current local time in minutes
-      const nowMs = now.getTime() + now.getTimezoneOffset() * 60000 + off * 3600000;
+      // Current local time in minutes (UTC + Egypt offset)
+      const nowMs = now.getTime() + off * 3600000;
       const nowMin = Math.floor(nowMs / 60000) % 1440;
 
       // Find next obligatory prayer (skip sunrise)
@@ -2268,11 +2269,11 @@
         const now = new Date();
         const dst = egyptDST(now);
         const off = dst ? 3 : 2;
-        const ms = now.getTime() + now.getTimezoneOffset() * 60000 + off * 3600000;
+        const ms = now.getTime() + off * 3600000;
         const loc = new Date(ms);
-        const h24 = loc.getHours();
-        const m = loc.getMinutes().toString().padStart(2, '0');
-        const s = loc.getSeconds().toString().padStart(2, '0');
+        const h24 = loc.getUTCHours();
+        const m = loc.getUTCMinutes().toString().padStart(2, '0');
+        const s = loc.getUTCSeconds().toString().padStart(2, '0');
         const ampm = h24 >= 12 ? 'م' : 'ص';
         const h12 = (h24 % 12 || 12).toString().padStart(2, '0');
         const el = document.getElementById('heroClock');
@@ -2470,11 +2471,14 @@
                 updateBellBtn();
               });
 
-              // Listen for SW asking us to refresh
+              // Listen for SW asking us to refresh or play azan
               navigator.serviceWorker.addEventListener('message', function (e) {
                 if (e.data && e.data.type === 'REFRESH_SCHEDULE') {
                   const g = document.getElementById('govSelect').value;
                   sendScheduleToSW(g);
+                }
+                if (e.data && e.data.type === 'PLAY_AZAN') {
+                  playAzan(e.data.prayerKey);
                 }
               });
             })
@@ -2526,6 +2530,7 @@
           if (diff <= 0 || diff > 86400000) return;
           const tid = setTimeout(function () {
             if (!_notifEnabled) return;
+            playAzan(key);
             new Notification(ICO[key] + ' حان الآن موعد أذان ' + AR[key], {
               body: 'أذكر الله واحرص على الصلاة في وقتها\n' + gov.name,
               icon: 'assets/Background/Azkar-Icon.png',
@@ -2614,6 +2619,9 @@
                   const g = document.getElementById('govSelect').value;
                   sendScheduleToSW(g);
                 }
+                if (e.data && e.data.type === 'PLAY_AZAN') {
+                  playAzan(e.data.prayerKey);
+                }
               });
             })
             .catch(function () {
@@ -2634,6 +2642,200 @@
           }
         }, 3000);
       }
+
+      // ════════════════════════════════════════════════════════
+      //  AZAN AUDIO ENGINE
+      //  - أذان الفجر: أذان خاص (مع "الصلاة خير من النوم")
+      //  - باقي الصلوات: أذان موحد
+      //  - يستخدم audio CDN مجاني (Islamic Network)
+      //  - زرار إيقاف ظاهر طول ما الأذان يعزف
+      // ════════════════════════════════════════════════════════
+
+      // CDN مجاني للأذان — يمكن استبداله بملفات محلية
+      const AZAN_URLS = {
+        // أذان الفجر — بصوت عبد الباسط مع "الصلاة خير من النوم"
+        fajr: 'https://cdn.islamic.network/prayer-times/audio/Abdul_Baset_Abdul_Samad_Mujawwad/Fajr.mp3',
+        // أذان موحد لبقية الصلوات — بصوت عبد الباسط
+        regular: 'https://cdn.islamic.network/prayer-times/audio/Abdul_Baset_Abdul_Samad_Mujawwad/Dhuhr.mp3'
+      };
+
+      let _azanAudio = null;
+
+      function playAzan(prayerKey) {
+        // إيقاف أي أذان سابق
+        if (_azanAudio) {
+          _azanAudio.pause();
+          _azanAudio.src = '';
+          _azanAudio = null;
+        }
+
+        const url = (prayerKey === 'fajr') ? AZAN_URLS.fajr : AZAN_URLS.regular;
+        const NAMES_AR = { fajr: 'الفجر', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
+        const ICONS_MAP = { fajr: '🌅', dhuhr: '🌤️', asr: '🌇', maghrib: '🌆', isha: '🌙' };
+
+        _azanAudio = new Audio(url);
+        _azanAudio.volume = 1.0;
+
+        // Show azan overlay
+        showAzanOverlay(prayerKey, NAMES_AR[prayerKey] || prayerKey, ICONS_MAP[prayerKey] || '🕌');
+
+        _azanAudio.play().catch(function (err) {
+          console.warn('[Azkar] Azan autoplay blocked:', err);
+          // إذا منع المتصفح التشغيل التلقائي — اعرض زرار تشغيل يدوي
+          showAzanManualPlay(prayerKey, NAMES_AR[prayerKey] || prayerKey, ICONS_MAP[prayerKey] || '🕌', url);
+        });
+
+        _azanAudio.onended = function () {
+          removeAzanOverlay();
+          _azanAudio = null;
+        };
+      }
+
+      function stopAzan() {
+        if (_azanAudio) {
+          _azanAudio.pause();
+          _azanAudio.src = '';
+          _azanAudio = null;
+        }
+        removeAzanOverlay();
+      }
+
+      function removeAzanOverlay() {
+        const ol = document.getElementById('azanOverlay');
+        if (ol) {
+          ol.style.opacity = '0';
+          ol.style.transform = 'translateY(20px)';
+          setTimeout(function () { if (ol.parentNode) ol.remove(); }, 400);
+        }
+      }
+
+      function showAzanOverlay(prayerKey, arName, icon) {
+        removeAzanOverlay();
+        const ol = document.createElement('div');
+        ol.id = 'azanOverlay';
+        ol.style.cssText = [
+          'position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px)',
+          'background:linear-gradient(135deg,#0a2318,#0f3d2a)',
+          'border:1px solid rgba(201,168,76,0.5)',
+          'border-radius:24px;padding:18px 24px',
+          'display:flex;align-items:center;gap:14px',
+          'box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(201,168,76,0.1)',
+          'z-index:99999;max-width:420px;width:92%;',
+          "font-family:'Cairo',sans-serif;color:#fff",
+          'transition:opacity 0.4s ease,transform 0.4s ease;opacity:0'
+        ].join(';');
+
+        ol.innerHTML = `
+          <div style="font-size:2.2rem;animation:azanPulse 1.5s ease-in-out infinite;flex-shrink:0">${icon}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700;font-size:1rem;margin-bottom:2px">
+              ${prayerKey === 'fajr' ? '🌙 أذان الفجر' : '🕌 أذان ' + arName}
+            </div>
+            <div style="font-size:0.78rem;opacity:0.65;display:flex;align-items:center;gap:6px">
+              <span class="azan-wave"><span></span><span></span><span></span><span></span></span>
+              يعزف الأذان...
+            </div>
+          </div>
+          <button onclick="stopAzan()" style="
+            background:rgba(201,168,76,0.15);
+            border:1px solid rgba(201,168,76,0.4);
+            color:var(--gold,#c9a84c);
+            border-radius:14px;padding:8px 16px;
+            font-family:inherit;font-size:0.82rem;
+            font-weight:700;cursor:pointer;
+            transition:all 0.2s;white-space:nowrap;
+            flex-shrink:0
+          " onmouseover="this.style.background='rgba(201,168,76,0.3)'"
+             onmouseout="this.style.background='rgba(201,168,76,0.15)'">
+            <i class="fa-solid fa-stop"></i> إيقاف
+          </button>
+        `;
+
+        // Add animation styles once
+        if (!document.getElementById('azanStyles')) {
+          const style = document.createElement('style');
+          style.id = 'azanStyles';
+          style.textContent = `
+            @keyframes azanPulse {
+              0%,100%{transform:scale(1);}
+              50%{transform:scale(1.15);}
+            }
+            .azan-wave {display:inline-flex;align-items:flex-end;gap:2px;height:14px;}
+            .azan-wave span {
+              display:inline-block;width:3px;background:var(--gold,#c9a84c);
+              border-radius:2px;animation:azanWave 1.2s ease-in-out infinite;
+            }
+            .azan-wave span:nth-child(1){height:4px;animation-delay:0s;}
+            .azan-wave span:nth-child(2){height:10px;animation-delay:0.2s;}
+            .azan-wave span:nth-child(3){height:7px;animation-delay:0.4s;}
+            .azan-wave span:nth-child(4){height:12px;animation-delay:0.1s;}
+            @keyframes azanWave {
+              0%,100%{transform:scaleY(0.5);opacity:0.5;}
+              50%{transform:scaleY(1);opacity:1;}
+            }
+          `;
+          document.head.appendChild(style);
+        }
+
+        document.body.appendChild(ol);
+        // Trigger animation
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            ol.style.opacity = '1';
+            ol.style.transform = 'translateX(-50%) translateY(0)';
+          });
+        });
+      }
+
+      function showAzanManualPlay(prayerKey, arName, icon, url) {
+        removeAzanOverlay();
+        const ol = document.createElement('div');
+        ol.id = 'azanOverlay';
+        ol.style.cssText = [
+          'position:fixed;bottom:20px;left:50%;transform:translateX(-50%)',
+          'background:linear-gradient(135deg,#0a2318,#0f3d2a)',
+          'border:1px solid rgba(201,168,76,0.5)',
+          'border-radius:24px;padding:18px 24px',
+          'display:flex;align-items:center;gap:14px',
+          'box-shadow:0 12px 40px rgba(0,0,0,0.6)',
+          'z-index:99999;max-width:420px;width:92%;',
+          "font-family:'Cairo',sans-serif;color:#fff"
+        ].join(';');
+
+        ol.innerHTML = `
+          <div style="font-size:2rem;flex-shrink:0">${icon}</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.95rem;margin-bottom:3px">حان أذان ${arName}</div>
+            <div style="font-size:0.76rem;opacity:0.65">اضغط لتشغيل الأذان</div>
+          </div>
+          <button id="azanPlayBtn" style="
+            background:var(--gold,#c9a84c);color:#fff;
+            border:none;border-radius:14px;padding:10px 18px;
+            font-family:inherit;font-size:0.85rem;font-weight:700;
+            cursor:pointer;flex-shrink:0
+          ">▶ تشغيل</button>
+          <button onclick="removeAzanOverlay()" style="
+            background:rgba(255,255,255,0.08);color:#fff;
+            border:none;border-radius:12px;padding:8px 12px;
+            font-family:inherit;cursor:pointer;font-size:0.82rem;flex-shrink:0
+          ">✕</button>
+        `;
+
+        document.body.appendChild(ol);
+
+        document.getElementById('azanPlayBtn').addEventListener('click', function () {
+          _azanAudio = new Audio(url);
+          _azanAudio.volume = 1.0;
+          _azanAudio.play().catch(console.warn);
+          _azanAudio.onended = function () { removeAzanOverlay(); _azanAudio = null; };
+          showAzanOverlay(prayerKey, arName, icon);
+        });
+      }
+
+      // اجعل stopAzan و removeAzanOverlay متاحين للـ HTML inline onclick
+      window.stopAzan = stopAzan;
+      window.removeAzanOverlay = removeAzanOverlay;
+      window.playAzan = playAzan;
 
       // Init notifications (legacy entry point — kept for compatibility)
       function initNotifications() { } // no-op, replaced by autoRestore above
