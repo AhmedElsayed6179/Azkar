@@ -496,6 +496,35 @@ function dailyReset() {
   }
 }
 
+// ====== Page Transition ======
+(function setupPageTransitions() {
+  // Create transition overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'pageTransitionOverlay';
+  document.body.appendChild(overlay);
+
+  // Animate in on load
+  document.documentElement.classList.add('page-entering');
+  requestAnimationFrame(() => {
+    setTimeout(() => document.documentElement.classList.remove('page-entering'), 500);
+  });
+
+  // Intercept all internal nav links
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (link.target === '_blank') return;
+
+    e.preventDefault();
+    overlay.classList.add('active');
+    setTimeout(() => {
+      window.location.href = href;
+    }, 380);
+  });
+})();
+
 // ====== Init ======
 document.addEventListener('DOMContentLoaded', () => {
   dailyReset();
@@ -535,10 +564,4 @@ window.addEventListener('load', () => {
       setTimeout(() => preloader.style.display = 'none', 700);
     }
   }, 500);
-});
-
-document.querySelectorAll('.nav-link').forEach(link => {
-  if (link.href === window.location.href) {
-    link.classList.add('active');
-  }
 });
