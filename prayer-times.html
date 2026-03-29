@@ -29,6 +29,7 @@
   <meta name="twitter:image" content="https://azkar-daily.netlify.app/assets/Background/Azkar-Preview.png" />
 
   <!-- ═══ Mobile ═══ -->
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#1a4731" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1941,9 +1942,9 @@
 
     <!-- Method note -->
     <p class="pt-note">
-      الحسابات بناءً على معيار هيئة المساحة المصرية (فجر 19.5° — عشاء 17.5°) — العصر: الحنفي
+      الحسابات بناءً على معيار هيئة المساحة المصرية
       &nbsp;•&nbsp;
-      التوقيت الصيفي يُطبق تلقائياً (آخر جمعة أبريل ← آخر جمعة أكتوبر)
+      التوقيت الصيفي أو الشتوي يُطبق تلقائياً
     </p>
 
   </div><!-- /pt-wrap -->
@@ -2022,9 +2023,13 @@
         const fajr = mid - computeTime(fajrAngle, 0, lat, d, EqT);
         const sunrise = mid - computeTime(horizAngle, 0, lat, d, EqT);
         const dhuhr = mid;
-        // Asr: Hanafi method (shadow factor 2) — المعتمد في مصر ووزارة الأوقاف
-        const Dasr = asin(1 / (2 + tan(Math.abs(lat - d))));
-        const asr = mid + computeTime(-Dasr, 0, lat, d, EqT);
+        // Asr: Correct formula — elevation angle A = arctan(1/(n+tan|lat-d|)), then time from A
+        // Standard/Shafi'i method (shadow factor n=1) — المعتمد في وزارة الأوقاف المصرية
+        (function () { })(); // marker
+        const asrN = 1; // shadow factor
+        const asrA = Math.atan(1 / (asrN + Math.abs(Math.tan((lat - d) * Math.PI / 180)))) * 180 / Math.PI;
+        const asrVal = (Math.sin(asrA * Math.PI / 180) - sin(lat) * sin(d)) / (cos(lat) * cos(d));
+        const asr = mid + (asrVal >= 1 ? 0 : asrVal <= -1 ? 12 : acos(asrVal) / 15);
         const maghrib = mid + computeTime(horizAngle, 0, lat, d, EqT);
         const isha = mid + computeTime(ishaAngle, 0, lat, d, EqT);
 
@@ -2467,6 +2472,7 @@
               waitActive(function () {
                 const govKey = document.getElementById('govSelect').value;
                 sendScheduleToSW(govKey);
+                scheduleInPageFallback(govKey);
                 showNotifBanner('success');
                 updateBellBtn();
               });
@@ -2517,29 +2523,31 @@
         govKey = govKey || document.getElementById('govSelect').value;
         const gov = GOVERNORATES[govKey];
         if (!gov) return;
-        const now = new Date();
-        const dst = egyptDST(now);
-        const off = dst ? 3 : 2;
-        const pt = PrayerCalc.compute(now.getFullYear(), now.getMonth() + 1, now.getDate(), gov.lat, gov.lng, 0);
         const AR = { fajr: 'الفجر', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
         const ICO = { fajr: '🌅', dhuhr: '🌤️', asr: '🌇', maghrib: '🌆', isha: '🌙' };
         const nowMs = Date.now();
 
-        ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (key) {
-          const diff = pt[key].getTime() - nowMs;
-          if (diff <= 0 || diff > 86400000) return;
-          const tid = setTimeout(function () {
-            if (!_notifEnabled) return;
-            playAzan(key);
-            new Notification(ICO[key] + ' حان الآن موعد أذان ' + AR[key], {
-              body: 'أذكر الله واحرص على الصلاة في وقتها\n' + gov.name,
-              icon: 'assets/Background/Azkar-Icon.png',
-              tag: 'prayer-' + key,
-              requireInteraction: true,
-              dir: 'rtl'
-            });
-          }, diff);
-          _inPageTimers.push(tid);
+        // Schedule today + tomorrow for full 48h coverage
+        [0, 1].forEach(function (dayOffset) {
+          const d = new Date();
+          d.setDate(d.getDate() + dayOffset);
+          const pt = PrayerCalc.compute(d.getFullYear(), d.getMonth() + 1, d.getDate(), gov.lat, gov.lng, 0);
+          ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (key) {
+            const diff = pt[key].getTime() - nowMs;
+            if (diff <= 0 || diff > 48 * 3600000) return;
+            const tid = setTimeout(function () {
+              if (!_notifEnabled) return;
+              playAzan(key);
+              new Notification(ICO[key] + ' حان الآن موعد أذان ' + AR[key], {
+                body: 'أذكر الله واحرص على الصلاة في وقتها\n' + gov.name,
+                icon: 'assets/Background/Azkar-Icon.png',
+                tag: 'prayer-' + key,
+                requireInteraction: true,
+                dir: 'rtl'
+              });
+            }, diff);
+            _inPageTimers.push(tid);
+          });
         });
       }
 

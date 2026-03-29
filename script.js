@@ -617,3 +617,162 @@ window.addEventListener('load', () => {
         }
     });
 })();
+
+// ====== PWA — Service Worker Registration + Install Prompt ======
+(function initPWA() {
+  'use strict';
+
+  // ── 1. Register Service Worker ────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw-prayer.js', { scope: '/' })
+        .then(function (reg) {
+          console.log('[PWA] SW registered, scope:', reg.scope);
+
+          // Keep SW alive with periodic pings every 10 minutes
+          // (helps reschedule prayer alarms while page is open)
+          setInterval(function () {
+            if (reg.active) reg.active.postMessage({ type: 'PING' });
+          }, 10 * 60 * 1000);
+        })
+        .catch(function (err) {
+          console.warn('[PWA] SW registration failed:', err);
+        });
+    });
+  }
+
+  // ── 2. PWA Install Prompt ──────────────────────────────────────
+  // Capture the browser's beforeinstallprompt event
+  var _installPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); // prevent automatic mini-bar
+    _installPrompt = e;
+    showInstallBanner();
+  });
+
+  function showInstallBanner() {
+    // Don't show if already installed or already dismissed
+    if (localStorage.getItem('azkarPWAInstalled') === '1') return;
+    if (localStorage.getItem('azkarPWADismissed') === '1') return;
+    if (document.getElementById('pwaInstallBanner'))       return;
+
+    var banner = document.createElement('div');
+    banner.id = 'pwaInstallBanner';
+    banner.style.cssText = [
+      'position:fixed;bottom:80px;left:50%;transform:translateX(-50%)',
+      'background:linear-gradient(135deg,#0a2318,#1a4731)',
+      'border:1px solid rgba(201,168,76,0.45)',
+      'border-radius:22px;padding:14px 18px',
+      'display:flex;align-items:center;gap:12px',
+      'box-shadow:0 12px 40px rgba(0,0,0,0.55),0 0 0 1px rgba(201,168,76,0.08)',
+      'z-index:99998;max-width:420px;width:calc(100% - 32px)',
+      "font-family:'Cairo',sans-serif;color:#fff",
+      'animation:pwaSlideUp 0.45s cubic-bezier(0.34,1.56,0.64,1)'
+    ].join(';');
+
+    banner.innerHTML = [
+      '<div style="font-size:2rem;flex-shrink:0">📲</div>',
+      '<div style="flex:1;min-width:0">',
+        '<div style="font-weight:700;font-size:0.92rem;margin-bottom:2px">ثبّت تطبيق أذكار</div>',
+        '<div style="font-size:0.74rem;opacity:0.65;line-height:1.4">',
+          'ثبّته على شاشتك الرئيسية للحصول على إشعارات الصلاة مع الأذان حتى لو أغلقت المتصفح',
+        '</div>',
+      '</div>',
+      '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">',
+        '<button id="pwaBtnInstall" style="',
+          'background:linear-gradient(135deg,#c9a84c,#e0c070);',
+          'color:#0a1f14;border:none;border-radius:12px;',
+          'padding:8px 14px;font-family:inherit;font-size:0.8rem;',
+          'font-weight:800;cursor:pointer;white-space:nowrap;',
+          'box-shadow:0 4px 12px rgba(201,168,76,0.3)',
+        '">تثبيت</button>',
+        '<button id="pwaBtnDismiss" style="',
+          'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);',
+          'border:1px solid rgba(255,255,255,0.1);border-radius:12px;',
+          'padding:6px 14px;font-family:inherit;font-size:0.75rem;cursor:pointer',
+        '">لاحقاً</button>',
+      '</div>'
+    ].join('');
+
+    // Add animation keyframe once
+    if (!document.getElementById('pwaStyles')) {
+      var st = document.createElement('style');
+      st.id = 'pwaStyles';
+      st.textContent = '@keyframes pwaSlideUp{from{opacity:0;transform:translateX(-50%) translateY(30px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+      document.head.appendChild(st);
+    }
+
+    document.body.appendChild(banner);
+
+    document.getElementById('pwaBtnInstall').onclick = function () {
+      if (!_installPrompt) return;
+      _installPrompt.prompt();
+      _installPrompt.userChoice.then(function (result) {
+        if (result.outcome === 'accepted') {
+          localStorage.setItem('azkarPWAInstalled', '1');
+          console.log('[PWA] User accepted install');
+        } else {
+          localStorage.setItem('azkarPWADismissed', '1');
+        }
+        _installPrompt = null;
+        banner.remove();
+      });
+    };
+
+    document.getElementById('pwaBtnDismiss').onclick = function () {
+      localStorage.setItem('azkarPWADismissed', '1');
+      banner.style.opacity = '0';
+      banner.style.transform = 'translateX(-50%) translateY(20px)';
+      banner.style.transition = 'all 0.3s ease';
+      setTimeout(function () { banner.remove(); }, 300);
+    };
+
+    // Auto-hide after 15 seconds
+    setTimeout(function () {
+      if (banner.parentNode) {
+        banner.style.opacity = '0';
+        banner.style.transition = 'opacity 0.4s ease';
+        setTimeout(function () { if (banner.parentNode) banner.remove(); }, 400);
+      }
+    }, 15000);
+  }
+
+  // ── 3. Detect when PWA is installed ───────────────────────────
+  window.addEventListener('appinstalled', function () {
+    localStorage.setItem('azkarPWAInstalled', '1');
+    var b = document.getElementById('pwaInstallBanner');
+    if (b) b.remove();
+
+    // Show success toast
+    var toast = document.createElement('div');
+    toast.style.cssText = [
+      'position:fixed;bottom:80px;left:50%;transform:translateX(-50%)',
+      'background:linear-gradient(135deg,#0f4a3a,#1a6b5a)',
+      'border:1px solid rgba(201,168,76,0.4)',
+      'border-radius:18px;padding:12px 22px',
+      'display:flex;align-items:center;gap:10px',
+      'box-shadow:0 8px 30px rgba(0,0,0,0.4)',
+      "z-index:99999;font-family:'Cairo',sans-serif;color:#fff;font-size:0.88rem"
+    ].join(';');
+    toast.innerHTML = '<span style="font-size:1.4rem">✅</span> <span>تم تثبيت تطبيق أذكار بنجاح! ستصلك إشعارات الصلاة مع الأذان 🎉</span>';
+    document.body.appendChild(toast);
+    setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.4s ease';
+      setTimeout(function () { toast.remove(); }, 400);
+    }, 5000);
+
+    console.log('[PWA] App installed successfully');
+  });
+
+  // ── 4. Detect if running as installed PWA ─────────────────────
+  var isPWA = window.matchMedia('(display-mode: standalone)').matches
+            || window.navigator.standalone === true;
+  if (isPWA) {
+    document.documentElement.classList.add('pwa-mode');
+    localStorage.setItem('azkarPWAInstalled', '1');
+    console.log('[PWA] Running as installed PWA');
+  }
+
+})();
