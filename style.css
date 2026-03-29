@@ -2343,16 +2343,16 @@ body.night-mode .dyk-dot.active {
   }
 }
 
-/* Smaller screens 769–900px — icons only, no text */
+/* Smaller screens 769–900px — icon + short text */
 @media (max-width: 900px) and (min-width: 769px) {
   .header-nav-inline a {
-    font-size: 0;
-    padding: 7px 8px;
-    gap: 0;
+    font-size: 0.65rem;
+    padding: 5px 6px;
+    gap: 3px;
   }
 
   .header-nav-inline a i {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     opacity: 1;
   }
 
