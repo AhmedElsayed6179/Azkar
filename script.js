@@ -31,12 +31,14 @@ const timeNow = new Date();
 if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 // ====== Active Nav ======
+// Active is already set via hardcoded class="active" in HTML for each page.
+// This function is kept as a safety fallback for any missed links.
 (function markActiveNav() {
   const links = document.querySelectorAll('.header-nav a, .header-nav-inline a, .drawer-nav a');
   const currentFile = location.pathname.split('/').pop() || 'index.html';
   links.forEach(link => {
-    link.classList.remove('active');
     const href = link.getAttribute('href') || '';
+    // Exact match only — prevents false positives
     if (href && href !== '#' && currentFile === href) {
       link.classList.add('active');
     }
