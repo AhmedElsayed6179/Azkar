@@ -1,5 +1,5 @@
 {
-  "name": "أذكار — أذكار وأدعية يومية",
+  "name": "أذكار",
   "short_name": "أذكار",
   "description": "أذكار الصباح والمساء الصحيحة الثابتة عن النبي ﷺ مع مواقيت الصلاة لجميع محافظات مصر",
   "lang": "ar",
@@ -8,12 +8,19 @@
   "id": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait-primary",
   "background_color": "#0a1f14",
   "theme_color": "#1a4731",
-  "categories": ["lifestyle", "religion", "utilities"],
-
+  "categories": [
+    "lifestyle",
+    "religion",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "assets/Background/Azkar-Icon.png",
@@ -34,7 +41,6 @@
       "purpose": "maskable"
     }
   ],
-
   "screenshots": [
     {
       "src": "assets/Background/Azkar-Preview.png",
@@ -44,31 +50,43 @@
       "label": "أذكار الصباح والمساء"
     }
   ],
-
   "shortcuts": [
     {
       "name": "أذكار الصباح والمساء",
       "short_name": "الصباح",
       "url": "/",
-      "icons": [{ "src": "assets/Background/Azkar-Icon.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "assets/Background/Azkar-Icon.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "مواقيت الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times.html",
-      "icons": [{ "src": "assets/Background/Azkar-Icon.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "assets/Background/Azkar-Icon.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "أذكار النوم",
       "short_name": "النوم",
       "url": "/azkar-sleep.html",
-      "icons": [{ "src": "assets/Background/Azkar-Icon.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "assets/Background/Azkar-Icon.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
-
   "related_applications": [],
   "prefer_related_applications": false,
-
   "share_target": {
     "action": "/",
     "method": "GET",
