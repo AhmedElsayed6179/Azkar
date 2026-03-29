@@ -30,11 +30,12 @@
 
   <!-- ═══ Mobile ═══ -->
   <meta name="theme-color" content="#1a4731" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="أذكار" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
   <link rel="icon" href="assets/Background/Azkar-Icon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" onerror="this.remove()" />
   <style>
     /* ======================================================
        PRAYER TIMES — Premium Redesign
@@ -1535,8 +1536,15 @@
     }
 
     @keyframes slideUp {
-      from { transform: translateX(-50%) translateY(30px); opacity:0; }
-      to { transform: translateX(-50%) translateY(0); opacity:1; }
+      from {
+        transform: translateX(-50%) translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
     }
 
     /* ── Method note ── */
@@ -1657,7 +1665,8 @@
       </div>
       <div class="pt-hero-shimmer"></div>
       <h1 class="pt-hero-title">مواقيت الصلاة</h1>
-      <p class="pt-hero-subtitle">مواقيت دقيقة لجميع محافظات مصر: القاهرة، الجيزة، الإسكندرية، الأقصر، أسوان، أسيوط، سوهاج، قنا، المنيا، بني سويف، الفيوم، الشرقية، الدقهلية، الغربية، المنوفية، القليوبية، كفر الشيخ، البحيرة، دمياط، الإسماعيلية، السويس، بورسعيد، شمال سيناء، جنوب سيناء، البحر الأحمر، الوادي الجديد، مطروح</p>
+      <p class="pt-hero-subtitle">مواقيت دقيقة لجميع محافظات مصر الـ ٢٧ — محسوبة فلكياً وفق معيار رابطة العالم الإسلامي
+      </p>
       <div class="pt-hero-date" id="heroDate">جاري التحميل...</div>
       <div class="pt-clock-wrap">
         <div class="pt-clock-label">الوقت الحالي</div>
@@ -2224,14 +2233,14 @@
 
         // Calculate today and tomorrow so we always have a full day ahead
         const prayers = [];
-        [0, 1].forEach(function(dayOffset) {
+        [0, 1].forEach(function (dayOffset) {
           const d = new Date(now);
           d.setDate(d.getDate() + dayOffset);
-          const pt = PrayerCalc.compute(d.getFullYear(), d.getMonth()+1, d.getDate(), gov.lat, gov.lng, 0);
-          ['fajr','dhuhr','asr','maghrib','isha'].forEach(function(key) {
+          const pt = PrayerCalc.compute(d.getFullYear(), d.getMonth() + 1, d.getDate(), gov.lat, gov.lng, 0);
+          ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (key) {
             // Convert UTC prayer time to local Egypt ms timestamp
-            const utcMs   = pt[key].getTime();
-            const localMs = utcMs + pt[key].getTimezoneOffset()*60000 + off*3600000;
+            const utcMs = pt[key].getTime();
+            const localMs = utcMs + pt[key].getTimezoneOffset() * 60000 + off * 3600000;
             // localMs is "Egypt wall-clock time" expressed as epoch — convert back to real epoch
             const realEpoch = utcMs; // use the UTC epoch directly; SW will offset the same way
             // Actually we just send the real future epoch ms the notification should fire
@@ -2249,8 +2258,8 @@
 
         // Filter to only future prayers (next 48h)
         const nowMs = Date.now();
-        const future = prayers.filter(function(p) {
-          return p.ms > nowMs && p.ms < nowMs + 48*3600000;
+        const future = prayers.filter(function (p) {
+          return p.ms > nowMs && p.ms < nowMs + 48 * 3600000;
         });
 
         return { govName: gov.name, prayers: future };
@@ -2287,30 +2296,30 @@
 
         const msgs = {
           request: {
-            icon:'🔔',
-            html:`<div style="flex:1"><div style="font-weight:700;margin-bottom:3px">تفعيل إشعارات الصلاة</div><div style="font-size:0.76rem;opacity:0.7">ستصلك إشعارات بمواقيت الصلاة حتى عند إغلاق المتصفح</div></div>
+            icon: '🔔',
+            html: `<div style="flex:1"><div style="font-weight:700;margin-bottom:3px">تفعيل إشعارات الصلاة</div><div style="font-size:0.76rem;opacity:0.7">ستصلك إشعارات بمواقيت الصلاة حتى عند إغلاق المتصفح</div></div>
                   <button id="nBtnAllow" style="background:#c9a84c;color:#fff;border:none;border-radius:12px;padding:8px 16px;font-family:inherit;font-size:0.82rem;font-weight:700;cursor:pointer">تفعيل</button>
                   <button id="nBtnDismiss" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:12px;padding:8px 12px;font-family:inherit;cursor:pointer;font-size:0.82rem">لاحقاً</button>`
           },
           success: {
-            icon:'✅',
-            html:`<div style="flex:1"><div style="font-weight:700">تم تفعيل الإشعارات بنجاح 🎉</div><div style="font-size:0.76rem;opacity:0.7">ستصلك إشعارات الصلاة حتى لو أغلقت الصفحة</div></div>
+            icon: '✅',
+            html: `<div style="flex:1"><div style="font-weight:700">تم تفعيل الإشعارات بنجاح 🎉</div><div style="font-size:0.76rem;opacity:0.7">ستصلك إشعارات الصلاة حتى لو أغلقت الصفحة</div></div>
                   <button id="nBtnDismiss" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:12px;padding:8px 12px;font-family:inherit;cursor:pointer;font-size:0.82rem">حسناً</button>`
           },
           already: {
-            icon:'🔔',
-            html:`<div style="flex:1"><div style="font-weight:700">إشعارات الصلاة مفعَّلة</div><div style="font-size:0.76rem;opacity:0.7">تعمل في الخلفية حتى عند إغلاق المتصفح</div></div>
+            icon: '🔔',
+            html: `<div style="flex:1"><div style="font-weight:700">إشعارات الصلاة مفعَّلة</div><div style="font-size:0.76rem;opacity:0.7">تعمل في الخلفية حتى عند إغلاق المتصفح</div></div>
                   <button id="nBtnOff" style="background:rgba(255,80,80,0.25);color:#ff8888;border:1px solid rgba(255,80,80,0.3);border-radius:12px;padding:8px 14px;font-family:inherit;cursor:pointer;font-size:0.8rem">إيقاف</button>
                   <button id="nBtnDismiss" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:12px;padding:8px 12px;font-family:inherit;cursor:pointer;font-size:0.82rem">حسناً</button>`
           },
           denied: {
-            icon:'⚠️',
-            html:`<div style="flex:1"><div style="font-weight:700">الإشعارات محجوبة</div><div style="font-size:0.76rem;opacity:0.7">افتح إعدادات المتصفح وأذِن للموقع بالإشعارات ثم أعد المحاولة</div></div>
+            icon: '⚠️',
+            html: `<div style="flex:1"><div style="font-weight:700">الإشعارات محجوبة</div><div style="font-size:0.76rem;opacity:0.7">افتح إعدادات المتصفح وأذِن للموقع بالإشعارات ثم أعد المحاولة</div></div>
                   <button id="nBtnDismiss" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:12px;padding:8px 12px;font-family:inherit;cursor:pointer;font-size:0.82rem">حسناً</button>`
           },
           nosw: {
-            icon:'ℹ️',
-            html:`<div style="flex:1"><div style="font-weight:700">متصفحك لا يدعم الإشعارات الخلفية</div><div style="font-size:0.76rem;opacity:0.7">الإشعارات تعمل فقط أثناء فتح الصفحة</div></div>
+            icon: 'ℹ️',
+            html: `<div style="flex:1"><div style="font-weight:700">الإشعارات مفعّلة للجلسة الحالية</div><div style="font-size:0.76rem;opacity:0.7">ستصلك الإشعارات أثناء فتح الصفحة — للإشعارات الخلفية استخدم Chrome أو Edge</div></div>
                   <button id="nBtnDismiss" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:12px;padding:8px 12px;font-family:inherit;cursor:pointer;font-size:0.82rem">حسناً</button>`
           }
         };
@@ -2321,19 +2330,19 @@
 
         // Wire buttons
         const btnDismiss = document.getElementById('nBtnDismiss');
-        if (btnDismiss) btnDismiss.onclick = function() { banner.remove(); };
+        if (btnDismiss) btnDismiss.onclick = function () { banner.remove(); };
 
         const btnAllow = document.getElementById('nBtnAllow');
         if (btnAllow) btnAllow.onclick = enableNotifications;
 
         const btnOff = document.getElementById('nBtnOff');
-        if (btnOff) btnOff.onclick = function() {
+        if (btnOff) btnOff.onclick = function () {
           disableNotifications();
           banner.remove();
         };
 
         if (mode === 'success' || mode === 'already') {
-          setTimeout(function() { banner && banner.remove(); }, 5000);
+          setTimeout(function () { banner && banner.remove(); }, 5000);
         }
       }
 
@@ -2341,7 +2350,7 @@
       function enableNotifications() {
         if (!('Notification' in window)) { showNotifBanner('nosw'); return; }
 
-        Notification.requestPermission().then(function(perm) {
+        Notification.requestPermission().then(function (perm) {
           if (perm !== 'granted') { showNotifBanner('denied'); return; }
 
           if (!('serviceWorker' in navigator)) {
@@ -2355,31 +2364,46 @@
           }
 
           navigator.serviceWorker.register('sw-prayer.js', { scope: '/' })
-            .then(function(reg) {
+            .then(function (reg) {
               _sw = reg;
               _notifEnabled = true;
               localStorage.setItem('azkarNotifEnabled', '1');
 
               // Try Periodic Background Sync (Chrome Android)
               if ('periodicSync' in reg) {
-                reg.periodicSync.register('prayer-check', { minInterval: 15*60*1000 })
-                  .catch(function() {}); // not critical
+                reg.periodicSync.register('prayer-check', { minInterval: 15 * 60 * 1000 })
+                  .catch(function () { }); // not critical
               }
 
-              const govKey = document.getElementById('govSelect').value;
-              sendScheduleToSW(govKey);
-              showNotifBanner('success');
-              updateBellBtn();
+              // Wait for SW to be active before sending schedule
+              function waitActive(callback) {
+                if (reg.active) { callback(); return; }
+                const sw = reg.installing || reg.waiting;
+                if (sw) {
+                  sw.addEventListener('statechange', function () {
+                    if (sw.state === 'activated') callback();
+                  });
+                } else {
+                  setTimeout(function () { waitActive(callback); }, 200);
+                }
+              }
+
+              waitActive(function () {
+                const govKey = document.getElementById('govSelect').value;
+                sendScheduleToSW(govKey);
+                showNotifBanner('success');
+                updateBellBtn();
+              });
 
               // Listen for SW asking us to refresh
-              navigator.serviceWorker.addEventListener('message', function(e) {
+              navigator.serviceWorker.addEventListener('message', function (e) {
                 if (e.data && e.data.type === 'REFRESH_SCHEDULE') {
                   const g = document.getElementById('govSelect').value;
                   sendScheduleToSW(g);
                 }
               });
             })
-            .catch(function(err) {
+            .catch(function (err) {
               console.warn('[Azkar] SW registration failed:', err);
               // Fallback to in-page
               _notifEnabled = true;
@@ -2405,7 +2429,7 @@
       // ── In-page fallback (when SW not available) ─────────────
       let _inPageTimers = [];
       function clearInPageTimers() {
-        _inPageTimers.forEach(function(t) { clearTimeout(t); });
+        _inPageTimers.forEach(function (t) { clearTimeout(t); });
         _inPageTimers = [];
       }
 
@@ -2414,18 +2438,18 @@
         govKey = govKey || document.getElementById('govSelect').value;
         const gov = GOVERNORATES[govKey];
         if (!gov) return;
-        const now  = new Date();
-        const dst  = egyptDST(now);
-        const off  = dst ? 3 : 2;
-        const pt   = PrayerCalc.compute(now.getFullYear(), now.getMonth()+1, now.getDate(), gov.lat, gov.lng, 0);
-        const AR   = {fajr:'الفجر',dhuhr:'الظهر',asr:'العصر',maghrib:'المغرب',isha:'العشاء'};
-        const ICO  = {fajr:'🌅',dhuhr:'🌤️',asr:'🌇',maghrib:'🌆',isha:'🌙'};
+        const now = new Date();
+        const dst = egyptDST(now);
+        const off = dst ? 3 : 2;
+        const pt = PrayerCalc.compute(now.getFullYear(), now.getMonth() + 1, now.getDate(), gov.lat, gov.lng, 0);
+        const AR = { fajr: 'الفجر', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' };
+        const ICO = { fajr: '🌅', dhuhr: '🌤️', asr: '🌇', maghrib: '🌆', isha: '🌙' };
         const nowMs = Date.now();
 
-        ['fajr','dhuhr','asr','maghrib','isha'].forEach(function(key) {
+        ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (key) {
           const diff = pt[key].getTime() - nowMs;
           if (diff <= 0 || diff > 86400000) return;
-          const tid = setTimeout(function() {
+          const tid = setTimeout(function () {
             if (!_notifEnabled) return;
             new Notification(ICO[key] + ' حان الآن موعد أذان ' + AR[key], {
               body: 'أذكر الله واحرص على الصلاة في وقتها\n' + gov.name,
@@ -2462,7 +2486,7 @@
         btn.id = 'toggleNotifBtn';
         btn.innerHTML = '<i class="fa-regular fa-bell"></i>';
         btn.title = 'تفعيل إشعارات الصلاة';
-        btn.onclick = function() {
+        btn.onclick = function () {
           if (_notifEnabled && Notification.permission === 'granted') {
             showNotifBanner('already');
           } else if (Notification.permission === 'denied') {
@@ -2476,7 +2500,7 @@
       })();
 
       // ── Gov change → re-send schedule ────────────────────────
-      document.getElementById('govSelect').addEventListener('change', function() {
+      document.getElementById('govSelect').addEventListener('change', function () {
         if (_notifEnabled && Notification.permission === 'granted') {
           sendScheduleToSW(this.value);
           scheduleInPageFallback(this.value);
@@ -2496,7 +2520,7 @@
 
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('sw-prayer.js', { scope: '/' })
-            .then(function(reg) {
+            .then(function (reg) {
               _sw = reg;
               // Wait for SW to become active
               function trySend() {
@@ -2510,14 +2534,14 @@
               }
               trySend();
 
-              navigator.serviceWorker.addEventListener('message', function(e) {
+              navigator.serviceWorker.addEventListener('message', function (e) {
                 if (e.data && e.data.type === 'REFRESH_SCHEDULE') {
                   const g = document.getElementById('govSelect').value;
                   sendScheduleToSW(g);
                 }
               });
             })
-            .catch(function() {
+            .catch(function () {
               scheduleInPageFallback();
               updateBellBtn();
             });
@@ -2529,7 +2553,7 @@
 
       // ── First-visit: show request banner after 3 seconds ─────
       if (!_notifEnabled && localStorage.getItem('azkarNotifEnabled') === null) {
-        setTimeout(function() {
+        setTimeout(function () {
           if ('Notification' in window && Notification.permission === 'default') {
             showNotifBanner('request');
           }
@@ -2537,7 +2561,7 @@
       }
 
       // Init notifications (legacy entry point — kept for compatibility)
-      function initNotifications() {} // no-op, replaced by autoRestore above
+      function initNotifications() { } // no-op, replaced by autoRestore above
 
       // Refresh prayer times every 60s
       setInterval(function () {
