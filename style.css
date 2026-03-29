@@ -2414,3 +2414,24 @@ body.night-mode .dyk-dot.active {
 .box:nth-child(8) {
   animation-delay: 0.4s;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.category-card, 
+.nav-link, 
+.social-icon,
+.about-social a,
+a, 
+button {
+  -webkit-tap-highlight-color: rgba(201, 168, 76, 0.3);
+  outline: none;
+}
+
+.category-card:active, 
+.nav-link:active,
+.about-social a:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
