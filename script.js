@@ -32,13 +32,47 @@ if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 // ====== Active Nav ======
 (function markActiveNav() {
-  const links = document.querySelectorAll('.header-nav a, .drawer-nav a');
+  const links = document.querySelectorAll('.header-nav a, .header-nav-inline a, .drawer-nav a');
   const currentFile = location.pathname.split('/').pop() || 'index.html';
   links.forEach(link => {
+    link.classList.remove('active');
     const href = link.getAttribute('href') || '';
-    if (href && (currentFile === href || currentFile.includes(href.replace('.html', '')))) {
+    if (href && href !== '#' && currentFile === href) {
       link.classList.add('active');
     }
+  });
+})();
+
+// ====== Page Transition ======
+(function setupPageTransitions() {
+  const overlay = document.createElement('div');
+  overlay.id = 'pageTransitionOverlay';
+  overlay.innerHTML = `
+    <div class="pt-overlay-content">
+      <div class="pt-overlay-logo">
+        <img src="assets/Background/Azkar-Icon.png" alt="أذكار" onerror="this.style.display='none'"/>
+        <span class="pt-overlay-brand">أذكار</span>
+      </div>
+      <div class="pt-overlay-divider"></div>
+      <div class="pt-overlay-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  document.documentElement.classList.add('page-entering');
+  requestAnimationFrame(() => {
+    setTimeout(() => document.documentElement.classList.remove('page-entering'), 550);
+  });
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (link.target === '_blank') return;
+    e.preventDefault();
+    overlay.classList.add('active');
+    setTimeout(() => { window.location.href = href; }, 420);
   });
 })();
 
@@ -495,35 +529,6 @@ function dailyReset() {
     localStorage.setItem('AzkarDate', timeNow.getDate());
   }
 }
-
-// ====== Page Transition ======
-(function setupPageTransitions() {
-  // Create transition overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'pageTransitionOverlay';
-  document.body.appendChild(overlay);
-
-  // Animate in on load
-  document.documentElement.classList.add('page-entering');
-  requestAnimationFrame(() => {
-    setTimeout(() => document.documentElement.classList.remove('page-entering'), 500);
-  });
-
-  // Intercept all internal nav links
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href]');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
-    if (link.target === '_blank') return;
-
-    e.preventDefault();
-    overlay.classList.add('active');
-    setTimeout(() => {
-      window.location.href = href;
-    }, 380);
-  });
-})();
 
 // ====== Init ======
 document.addEventListener('DOMContentLoaded', () => {

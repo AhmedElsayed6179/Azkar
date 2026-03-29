@@ -1575,7 +1575,7 @@
         <a href="azkar-children.html"><i class="fa-solid fa-child-reaching"></i> أذكار الأطفال</a>
         <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
         <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
-        <a href="prayer-times.html" class="active"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+        <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
       </div>
       <div class="drawer-divider"></div>
       <div class="drawer-info">
@@ -1586,7 +1586,8 @@
             <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
             <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-            <a href="mailto:ahmedelsayed6179@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+            <a href="/cdn-cgi/l/email-protection#2b4a43464e4f4e47584a524e4f1d1a1c126b4c464a424705484446"
+              target="_blank"><i class="fa-solid fa-envelope"></i></a>
           </div>
         </div>
       </div>
@@ -1614,7 +1615,7 @@
         <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
         <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
         <span class="header-nav-sep"></span>
-        <a href="prayer-times.html" class="active"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+        <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
       </nav>
       <span class="header-page-name">مواقيت الصلاة</span>
       <div class="header-actions">
@@ -1634,7 +1635,7 @@
         <a href="azkar-travel.html"><i class="fa-solid fa-plane"></i> أذكار السفر</a>
         <a href="azkar-sick.html"><i class="fa-solid fa-heart-pulse"></i> أذكار المرض</a>
         <div class="header-nav-divider"></div>
-        <a href="prayer-times.html" class="active"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
+        <a href="prayer-times.html"><i class="fa-solid fa-clock"></i> مواقيت الصلاة</a>
       </nav>
     </div>
   </header>
@@ -1868,6 +1869,7 @@
   <button class="scroll-top" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
   <!-- Adhan.js — Accurate prayer time calculations -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="script.js"></script>
   <script>
     // ============================================================
@@ -2463,11 +2465,11 @@
 
         // Hide hint once gyro is working (user can see the live needle)
         const hint = document.getElementById('qiblaHint');
-        if (hint && !hint.classList.contains('gyro-active')) {
-          hint.classList.add('gyro-active');
-        }
+        if (hint) hint.classList.add('gyro-active');
       }
-    })();
+
+    })(); // end dynamic qibla IIFE
+
   </script>
 </body>
 
