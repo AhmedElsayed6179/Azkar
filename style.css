@@ -10,6 +10,37 @@
   --gold-light: #e8c96e;
   --gold-dark: #9c7d34;
 
+  /* ── Morning Day Mode (mdm) Variables ─────────────────────── */
+  --mdm-btn-bg: linear-gradient(135deg, #1d7060, #0f4d40);
+  --mdm-btn-shadow: rgba(26, 107, 90, 0.45);
+  --mdm-btn-inactive: rgba(50, 50, 50, 0.45);
+  --mdm-btn-inactive-hover: rgba(30, 30, 30, 0.85);
+  --mdm-bismillah: #2e2e2e;
+  --mdm-bismillah-shadow: rgba(0, 0, 0, 0.10);
+  --mdm-text-main: #1a3528;
+  --mdm-text-sub: #2a4a38;
+  --mdm-text-title: #1a4731;
+  --mdm-label: #b8860b;
+  --mdm-link: #1a6b5a;
+  --mdm-link-bg: rgba(26, 107, 90, 0.07);
+  --mdm-link-border: rgba(26, 107, 90, 0.22);
+  --mdm-card-border: rgba(26, 107, 90, 0.16);
+  --mdm-card-shadow: rgba(26, 107, 90, 0.10);
+  --mdm-bar-bg: rgba(26, 107, 90, 0.12);
+  --mdm-bar-fill: linear-gradient(90deg, #1a6b5a, #c9a84c);
+  --mdm-reset-bg: rgba(26, 107, 90, 0.08);
+  --mdm-reset-border: rgba(26, 107, 90, 0.25);
+  --mdm-reset-color: #1a6b5a;
+  --mdm-reset-hover-bg: #1a6b5a;
+  --mdm-dot-bg: rgba(26, 107, 90, 0.20);
+  --mdm-source-bg: rgba(26, 107, 90, 0.08);
+  --mdm-source-border: rgba(26, 107, 90, 0.18);
+  --mdm-source-color: #1a6b5a;
+  --mdm-tag-bg: rgba(26, 107, 90, 0.10);
+  --mdm-tag-border: rgba(26, 107, 90, 0.22);
+  --mdm-drawer-bg: #f5faf7;
+  /* ──────────────────────────────────────────────────────────── */
+
   /* Day */
   --day-primary: #1a6b5a;
   --day-secondary: #2d8c78;
@@ -51,6 +82,1721 @@ body.night-mode {
   --subtext: var(--night-subtext);
 }
 
+/* ── Smooth transitions on body for all mode changes ── */
+body {
+  transition:
+    background 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Global night-mode atmospheric background (non-morning pages) ── */
+body.night-mode:not([data-page="morning"]) {
+  background:
+    radial-gradient(ellipse at 70% 0%, rgba(27, 61, 102, 0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 80%, rgba(20, 45, 90, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 60%, rgba(100, 80, 170, 0.08) 0%, transparent 45%),
+    #0a1628;
+}
+
+/* ── Global day-mode atmospheric background (non-morning pages) ── */
+body:not([data-page="morning"]):not(.night-mode) {
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(26, 107, 90, 0.09) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 60%, rgba(26, 107, 90, 0.06) 0%, transparent 50%),
+    #f4f0e6;
+}
+
+body[data-page="morning"] {
+  transition:
+    background 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body[data-page="morning"].morning-day-mode {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(139, 108, 200, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(26, 107, 90, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 60%, rgba(139, 108, 200, 0.05) 0%, transparent 55%),
+    linear-gradient(160deg, #f8f6ff 0%, #f0edf9 30%, #eaf4f0 65%, #f4f8f6 100%);
+  color: #1a1a2e;
+}
+
+/* Subtle top accent glow */
+body[data-page="morning"].morning-day-mode::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28vh;
+  background:
+    radial-gradient(ellipse at 30% -10%, rgba(139, 108, 200, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% -5%, rgba(26, 107, 90, 0.10) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body[data-page="morning"].morning-day-mode::after {
+  content: none;
+}
+
+
+body[data-page="morning"].evening-mode {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(80, 60, 150, 0.38) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(100, 80, 190, 0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 12% 25%, rgba(60, 100, 190, 0.18) 0%, transparent 45%),
+    linear-gradient(180deg, #060d1c 0%, #0a1530 25%, #0c1c40 55%, #09152e 100%);
+  color: #dde6f5;
+}
+
+/* Stars pseudo-element */
+body[data-page="morning"].evening-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 12%, rgba(255, 255, 255, 0.80) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 6%, rgba(255, 255, 255, 0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 18%, rgba(255, 255, 255, 0.65) 0%, transparent 100%),
+    radial-gradient(2px 2px at 52% 4%, rgba(255, 255, 255, 0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 68% 14%, rgba(255, 255, 255, 0.70) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 82% 8%, rgba(255, 255, 255, 0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 94% 22%, rgba(255, 255, 255, 0.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 16% 32%, rgba(255, 255, 255, 0.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 42%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
+    radial-gradient(2px 2px at 58% 28%, rgba(139, 108, 200, 0.65) 0%, transparent 100%),
+    radial-gradient(1px 1px at 74% 38%, rgba(255, 255, 255, 0.42) 0%, transparent 100%),
+    radial-gradient(2.5px 2.5px at 88% 20%, rgba(255, 255, 255, 0.50) 0%, transparent 100%),
+    radial-gradient(1px 1px at 4% 50%, rgba(255, 255, 255, 0.30) 0%, transparent 100%),
+    radial-gradient(1px 1px at 44% 52%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 76% 58%, rgba(255, 255, 255, 0.32) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: starsShimmer 7s ease-in-out infinite alternate;
+}
+
+/* Moon glow */
+body[data-page="morning"].evening-mode::after {
+  content: '';
+  position: fixed;
+  top: 62px;
+  left: 4%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(139, 108, 200, 0.20) 0%, rgba(130, 100, 220, 0.08) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+@keyframes starsShimmer {
+  0% {
+    opacity: 0.65;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Ensure all content is above pseudo-elements */
+/* Keep site-header sticky — fix flex + sticky conflict in morning page */
+body[data-page="morning"] .site-header {
+  z-index: 200;
+  width: 100%;
+  align-self: stretch;
+  position: sticky;
+  top: 0;
+}
+
+/* Fix body flex alignment for morning page so sticky works */
+body[data-page="morning"] {
+  align-items: stretch;
+}
+
+/* Re-center content elements within the stretched body */
+body[data-page="morning"] .hero,
+body[data-page="morning"] .progress-section,
+body[data-page="morning"] .azkar-section,
+body[data-page="morning"] .more-azkar-wrap,
+body[data-page="morning"] .dyk-section {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body[data-page="morning"] .hero,
+body[data-page="morning"] .progress-section,
+body[data-page="morning"] .azkar-section,
+body[data-page="morning"] .more-azkar-wrap,
+body[data-page="morning"] .dyk-section,
+body[data-page="morning"] .site-footer,
+body[data-page="morning"] .mobile-drawer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  align-self: stretch;
+}
+
+/* Keep fixed-position elements unaffected by flex stretch */
+body[data-page="morning"] .modal-overlay,
+body[data-page="morning"] #scrollTopBtn,
+body[data-page="morning"] .alert-toast {
+  position: fixed !important;
+  width: auto;
+  align-self: auto;
+}
+
+/* Smooth transitions for inner elements */
+body[data-page="morning"] .hero-quote,
+body[data-page="morning"] .mode-switch,
+body[data-page="morning"] .progress-card,
+body[data-page="morning"] .more-azkar-card,
+body[data-page="morning"] .box,
+body[data-page="morning"] .dyk-card,
+body[data-page="morning"] .dyk-card-header {
+  transition:
+    background 0.55s ease,
+    border-color 0.55s ease,
+    box-shadow 0.55s ease,
+    color 0.55s ease;
+}
+
+/* ── BISMILLAH ── */
+body[data-page="morning"].morning-day-mode .hero-bismillah {
+  color: var(--mdm-bismillah);
+  text-shadow: 0 2px 16px var(--mdm-bismillah-shadow);
+}
+
+body[data-page="morning"].evening-mode .hero-bismillah {
+  color: var(--gold-light);
+  text-shadow: 0 0 30px rgba(139, 108, 200, 0.45);
+}
+
+/* ── HERO QUOTE ── */
+body[data-page="morning"].morning-day-mode .hero-quote {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-right: 4px solid var(--gold);
+  border: 1px solid rgba(26, 107, 90, 0.16);
+  border-right: 4px solid var(--gold);
+  box-shadow: 0 8px 40px rgba(26, 107, 90, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+body[data-page="morning"].morning-day-mode .hero-quote-text {
+  color: var(--mdm-text-main);
+}
+
+body[data-page="morning"].morning-day-mode .hero-quote-attribution {
+  color: var(--gold-dark);
+}
+
+body[data-page="morning"].evening-mode .hero-quote {
+  background: rgba(10, 18, 40, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-right: 4px solid var(--gold);
+  border: 1px solid rgba(139, 108, 200, 0.18);
+  border-right: 4px solid var(--gold);
+  box-shadow: 0 8px 40px rgba(0, 0, 30, 0.45), 0 0 60px rgba(100, 80, 200, 0.07);
+}
+
+body[data-page="morning"].evening-mode .hero-quote-text {
+  color: #c4d5ec;
+}
+
+body[data-page="morning"].evening-mode .hero-quote-attribution {
+  color: var(--gold-light);
+}
+
+/* ── MODE SWITCH ── */
+body[data-page="morning"].morning-day-mode .mode-switch {
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 24px rgba(26, 107, 90, 0.14), 0 0 0 1px rgba(26, 107, 90, 0.18);
+}
+
+body[data-page="morning"].morning-day-mode .mode-btn {
+  color: var(--mdm-btn-inactive);
+}
+
+body[data-page="morning"].morning-day-mode .mode-btn:hover {
+  color: var(--mdm-btn-inactive-hover);
+}
+
+body[data-page="morning"].morning-day-mode .mode-btn.active-day {
+  background: var(--mdm-btn-bg);
+  color: white;
+  box-shadow: 0 4px 20px var(--mdm-btn-shadow);
+}
+
+body[data-page="morning"].evening-mode .mode-switch {
+  background: rgba(8, 16, 38, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(139, 108, 200, 0.22);
+}
+
+body[data-page="morning"].evening-mode .mode-btn {
+  color: rgba(200, 218, 255, 0.45);
+}
+
+body[data-page="morning"].evening-mode .mode-btn:hover {
+  color: rgba(200, 218, 255, 0.82);
+}
+
+/* ── PROGRESS CARD ── */
+body[data-page="morning"].morning-day-mode .progress-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(26, 107, 90, 0.18);
+  box-shadow: 0 6px 28px rgba(26, 107, 90, 0.12);
+}
+
+body[data-page="morning"].morning-day-mode .progress-label {
+  color: var(--mdm-text-title);
+}
+
+body[data-page="morning"].morning-day-mode .progress-bar-wrap {
+  background: var(--mdm-bar-bg);
+}
+
+body[data-page="morning"].morning-day-mode .progress-bar-fill {
+  background: var(--mdm-bar-fill);
+}
+
+body[data-page="morning"].morning-day-mode .progress-count {
+  color: var(--mdm-text-title);
+}
+
+body[data-page="morning"].morning-day-mode .reset-btn {
+  background: var(--mdm-reset-bg);
+  border-color: var(--mdm-reset-border);
+  color: var(--mdm-reset-color);
+}
+
+body[data-page="morning"].morning-day-mode .reset-btn:hover {
+  background: var(--mdm-reset-hover-bg);
+  color: white;
+}
+
+body[data-page="morning"].evening-mode .progress-card {
+  background: rgba(8, 16, 42, 0.70);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(139, 108, 200, 0.20);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+}
+
+body[data-page="morning"].evening-mode .progress-label {
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .progress-bar-wrap {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+body[data-page="morning"].evening-mode .progress-bar-fill {
+  background: linear-gradient(90deg, var(--night-secondary), var(--gold));
+}
+
+body[data-page="morning"].evening-mode .progress-count {
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .reset-btn {
+  background: rgba(139, 108, 200, 0.09);
+  border-color: rgba(139, 108, 200, 0.22);
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .reset-btn:hover {
+  background: var(--gold-dark);
+  color: white;
+}
+
+/* ── AZKAR BOXES ── */
+body[data-page="morning"].morning-day-mode .box {
+  background: linear-gradient(145deg, #1d7060, #125044);
+  box-shadow: 0 8px 32px rgba(26, 107, 90, 0.28), 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  border: none;
+}
+
+body[data-page="morning"].morning-day-mode .box:hover {
+  box-shadow: 0 18px 52px rgba(26, 107, 90, 0.38), 0 1px 0 rgba(255, 255, 255, 0.18) inset;
+  transform: translateY(-3px);
+}
+
+body[data-page="morning"].evening-mode .box {
+  background: linear-gradient(145deg, #1b4070, #0e2a52);
+  box-shadow: 0 8px 32px rgba(0, 0, 40, 0.50), 0 1px 0 rgba(139, 108, 200, 0.18) inset;
+  border: 1px solid rgba(139, 108, 200, 0.09);
+}
+
+body[data-page="morning"].evening-mode .box:hover {
+  box-shadow: 0 18px 55px rgba(0, 0, 40, 0.60), 0 1px 0 rgba(139, 108, 200, 0.25) inset;
+  transform: translateY(-3px);
+}
+
+/* ── COUNTER BUTTONS ── */
+body[data-page="morning"].morning-day-mode .smlNum {
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: white;
+}
+
+body[data-page="morning"].morning-day-mode .smlNum:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.32);
+  transform: scale(1.07);
+}
+
+body[data-page="morning"].morning-day-mode .smlNum.deactive {
+  background: rgba(201, 168, 76, 0.28);
+  border-color: rgba(201, 168, 76, 0.45);
+}
+
+body[data-page="morning"].evening-mode .smlNum {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(139, 108, 200, 0.32);
+  color: rgba(220, 235, 255, 0.90);
+}
+
+body[data-page="morning"].evening-mode .smlNum:hover:not(:disabled) {
+  background: rgba(139, 108, 200, 0.22);
+  transform: scale(1.07);
+}
+
+body[data-page="morning"].evening-mode .smlNum.deactive {
+  background: rgba(139, 108, 200, 0.20);
+  border-color: rgba(139, 108, 200, 0.38);
+}
+
+/* ── MORE AZKAR CARD ── */
+body[data-page="morning"].morning-day-mode .more-azkar-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 107, 90, 0.15);
+  box-shadow: 0 8px 32px rgba(26, 107, 90, 0.10);
+}
+
+body[data-page="morning"].morning-day-mode .more-azkar-title {
+  color: var(--mdm-text-title);
+}
+
+body[data-page="morning"].morning-day-mode .more-azkar-links a {
+  background: var(--mdm-link-bg);
+  border-color: var(--mdm-link-border);
+  color: var(--mdm-link);
+}
+
+body[data-page="morning"].morning-day-mode .more-azkar-links a:hover {
+  background: var(--mdm-link);
+  color: white;
+}
+
+body[data-page="morning"].evening-mode .more-azkar-card {
+  background: rgba(8, 16, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 108, 200, 0.14);
+}
+
+body[data-page="morning"].evening-mode .more-azkar-title {
+  color: var(--gold);
+}
+
+body[data-page="morning"].evening-mode .more-azkar-links a {
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.18);
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .more-azkar-links a:hover {
+  background: var(--gold-dark);
+  color: white;
+}
+
+/* ── DID YOU KNOW ── */
+body[data-page="morning"].morning-day-mode .dyk-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 107, 90, 0.15);
+  box-shadow: 0 12px 40px rgba(26, 107, 90, 0.10);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-card-header {
+  background: linear-gradient(135deg, #1d7060 0%, #125044 100%);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-text {
+  color: var(--mdm-text-main);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-label {
+  color: var(--mdm-label);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-source {
+  background: var(--mdm-source-bg);
+  border-color: var(--mdm-source-border);
+  color: var(--mdm-source-color);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-link {
+  background: linear-gradient(135deg, #1d7060, #125044);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-dot {
+  background: var(--mdm-dot-bg);
+}
+
+body[data-page="morning"].morning-day-mode .dyk-dot.active {
+  background: var(--gold);
+}
+
+body[data-page="morning"].evening-mode .dyk-card {
+  background: rgba(8, 16, 42, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 108, 200, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+
+body[data-page="morning"].evening-mode .dyk-card-header {
+  background: linear-gradient(135deg, #0d2138 0%, #1a3a5c 100%);
+}
+
+body[data-page="morning"].evening-mode .dyk-text {
+  color: var(--night-text);
+}
+
+body[data-page="morning"].evening-mode .dyk-label {
+  color: var(--gold);
+}
+
+body[data-page="morning"].evening-mode .dyk-source {
+  background: rgba(139, 108, 200, 0.09);
+  border-color: rgba(139, 108, 200, 0.18);
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .dyk-link {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+}
+
+body[data-page="morning"].evening-mode .dyk-dot {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body[data-page="morning"].evening-mode .dyk-dot.active {
+  background: var(--gold);
+}
+
+/* ── AZKAR SEPARATOR ── */
+body[data-page="morning"].evening-mode .azkar-separator::before,
+body[data-page="morning"].evening-mode .azkar-separator::after {
+  background: linear-gradient(to right, transparent, rgba(139, 108, 200, 0.55), transparent);
+}
+
+body[data-page="morning"].evening-mode .azkar-separator i {
+  color: var(--gold-light);
+}
+
+/* ── SOURCE POPUP ── */
+body[data-page="morning"].morning-day-mode .source-backdrop {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+body[data-page="morning"].morning-day-mode .sourceHidden {
+  background: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid var(--mdm-card-border);
+}
+
+body[data-page="morning"].morning-day-mode .source-tag {
+  background: var(--mdm-tag-bg);
+  color: var(--mdm-source-color);
+  border-color: var(--mdm-tag-border);
+}
+
+/* ── MODAL ── */
+body[data-page="morning"].morning-day-mode .modal-box {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+body[data-page="morning"].morning-day-mode .modal-title {
+  color: var(--mdm-text-title);
+}
+
+body[data-page="morning"].morning-day-mode .modal-desc {
+  color: var(--mdm-text-sub);
+}
+
+/* ── DRAWER ── */
+body[data-page="morning"].morning-day-mode .drawer-panel {
+  background: var(--mdm-drawer-bg);
+}
+
+body[data-page="morning"].morning-day-mode .drawer-nav a {
+  color: var(--mdm-text-main);
+}
+
+/* ── FOOTER ── */
+/* ── Morning DAY mode: navbar — professional deep green (matches other pages) ── */
+body[data-page="morning"].morning-day-mode .site-header {
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0) 100%),
+    linear-gradient(135deg, #1d7060 0%, #145244 40%, #0d3d31 100%);
+  box-shadow:
+    0 1px 0 rgba(139, 108, 200, 0.30),
+    0 4px 24px rgba(0, 0, 0, 0.22),
+    0 12px 40px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: none;
+}
+
+body[data-page="morning"].morning-day-mode .header-nav-inline a,
+body[data-page="morning"].morning-day-mode .header-logo-title,
+body[data-page="morning"].morning-day-mode .header-logo-sub,
+body[data-page="morning"].morning-day-mode .header-page-name {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+body[data-page="morning"].morning-day-mode .header-nav-inline a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+body[data-page="morning"].morning-day-mode .header-nav-inline a.active {
+  color: var(--gold-light);
+  background: rgba(139, 108, 200, 0.13);
+  border-bottom-color: var(--gold);
+}
+
+body[data-page="morning"].morning-day-mode .icon-btn {
+  color: rgba(255, 255, 255, 0.80);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-page="morning"].morning-day-mode .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.20);
+}
+
+/* ── Morning EVENING mode: navbar turns deep navy/dark ── */
+body[data-page="morning"].evening-mode .site-header {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%),
+    linear-gradient(135deg, #0d1e3a 0%, #091529 40%, #060e20 100%);
+  box-shadow:
+    0 1px 0 rgba(139, 108, 200, 0.25),
+    0 4px 28px rgba(0, 0, 0, 0.55),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body[data-page="morning"].evening-mode .header-nav-inline a {
+  color: rgba(200, 218, 255, 0.80);
+}
+
+body[data-page="morning"].evening-mode .header-nav-inline a:hover {
+  color: var(--gold-light);
+  background: rgba(139, 108, 200, 0.08);
+}
+
+body[data-page="morning"].evening-mode .header-nav-inline a.active {
+  color: var(--gold-light);
+  border-bottom-color: var(--gold);
+}
+
+body[data-page="morning"].evening-mode .header-logo-title,
+body[data-page="morning"].evening-mode .header-page-name {
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .header-logo-sub {
+  color: rgba(200, 218, 255, 0.55);
+}
+
+body[data-page="morning"].evening-mode .icon-btn {
+  color: rgba(200, 218, 255, 0.75);
+  border-color: rgba(139, 108, 200, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body[data-page="morning"].evening-mode .icon-btn:hover {
+  background: rgba(139, 108, 200, 0.14);
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].morning-day-mode .site-footer {
+  background: linear-gradient(145deg, #1d7060, #125044);
+  border-top: 1px solid rgba(139, 108, 200, 0.18);
+}
+
+body[data-page="morning"].evening-mode .site-footer {
+  background: linear-gradient(145deg, #060d1c, #030812);
+  border-top: 1px solid rgba(139, 108, 200, 0.14);
+}
+
+/* ── TOAST ── */
+body[data-page="morning"].morning-day-mode .alert-toast {
+  background: #1a2a3a;
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .alert-toast {
+  background: #1a2a3a;
+  color: var(--gold-light);
+}
+
+/* ── SCROLL TOP ── */
+body[data-page="morning"].morning-day-mode .scroll-top {
+  background: linear-gradient(135deg, #1d7060, #125044);
+  box-shadow: 0 6px 20px rgba(26, 107, 90, 0.40);
+  color: white;
+}
+
+body[data-page="morning"].morning-day-mode .scroll-top:hover {
+  box-shadow: 0 10px 28px rgba(26, 107, 90, 0.55);
+}
+
+body[data-page="morning"].evening-mode .scroll-top {
+  background: linear-gradient(135deg, #1a3d6e, #0d2650);
+  box-shadow: 0 6px 20px rgba(26, 61, 110, 0.5);
+  color: var(--gold-light);
+}
+
+body[data-page="morning"].evening-mode .scroll-top:hover {
+  box-shadow: 0 10px 28px rgba(26, 61, 110, 0.65);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   🌙 GLOBAL NIGHT MODE IMPROVEMENTS — All other pages
+   ───────────────────────────────────────────────────────────── */
+
+/* Sub-hero improvements */
+body.night-mode .sub-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+body.night-mode .sub-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(43, 95, 138, 0.28) 0%, transparent 70%),
+    radial-gradient(ellipse at 90% 80%, rgba(139, 108, 200, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.night-mode .sub-hero>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* Night mode progress card border */
+body.night-mode .progress-card,
+body.night-mode .sub-progress-card {
+  border: 1px solid rgba(139, 108, 200, 0.12);
+}
+
+/* Night mode more azkar */
+body.night-mode .more-azkar-card {
+  background: rgba(13, 27, 50, 0.85);
+  border: 1px solid rgba(139, 108, 200, 0.10);
+}
+
+/* Night mode source popup */
+body.night-mode .sourceHidden {
+  background: #0e1e36;
+  color: var(--night-text);
+  border: 1px solid rgba(139, 108, 200, 0.22);
+}
+
+body.night-mode .source-tag {
+  background: rgba(139, 108, 200, 0.12);
+  color: var(--gold-light);
+  border-color: rgba(139, 108, 200, 0.22);
+}
+
+body.night-mode .doneBtn {
+  color: var(--gold-light);
+}
+
+/* Night mode hero quote (sub-pages) */
+body.night-mode .hero-quote-text {
+  color: var(--night-text);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ✨ LANDING PAGE (index.html) ENHANCEMENTS
+   ───────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   🏠  LANDING PAGE (index.html) — Full Design System
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Hero ── */
+.landing-hero {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  /* ── Day Mode Background ── */
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(201, 168, 76, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 30%, rgba(26, 107, 90, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(26, 107, 90, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 110%, rgba(201, 168, 76, 0.10) 0%, transparent 50%),
+    linear-gradient(170deg, #faf8f0 0%, #f5f0e0 40%, #eef5f0 70%, #f8f6ef 100%);
+}
+
+/* ── Geometric islamic pattern overlay (day) ── */
+.landing-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(60deg,
+      transparent,
+      transparent 38px,
+      rgba(201, 168, 76, 0.045) 38px,
+      rgba(201, 168, 76, 0.045) 39px),
+    repeating-linear-gradient(-60deg,
+      transparent,
+      transparent 38px,
+      rgba(201, 168, 76, 0.045) 38px,
+      rgba(201, 168, 76, 0.045) 39px),
+    repeating-linear-gradient(0deg,
+      transparent,
+      transparent 38px,
+      rgba(26, 107, 90, 0.03) 38px,
+      rgba(26, 107, 90, 0.03) 39px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Radiant glow orbs (day) ── */
+.landing-hero::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(201, 168, 76, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: heroGlowPulse 5s ease-in-out infinite;
+}
+
+@keyframes heroGlowPulse {
+
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+/* ── Night Mode Background ── */
+body.night-mode .landing-hero {
+  background:
+    radial-gradient(ellipse at 50% -5%, rgba(201, 168, 76, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 5% 25%, rgba(26, 107, 90, 0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 95% 70%, rgba(26, 71, 140, 0.20) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 105%, rgba(201, 168, 76, 0.12) 0%, transparent 50%),
+    linear-gradient(170deg, #0d1f14 0%, #0a1628 45%, #0a1f1a 100%);
+}
+
+/* ── Night geometric pattern ── */
+body.night-mode .landing-hero::before {
+  background-image:
+    repeating-linear-gradient(60deg,
+      transparent,
+      transparent 38px,
+      rgba(201, 168, 76, 0.06) 38px,
+      rgba(201, 168, 76, 0.06) 39px),
+    repeating-linear-gradient(-60deg,
+      transparent,
+      transparent 38px,
+      rgba(201, 168, 76, 0.06) 38px,
+      rgba(201, 168, 76, 0.06) 39px),
+    repeating-linear-gradient(0deg,
+      transparent,
+      transparent 38px,
+      rgba(26, 107, 90, 0.05) 38px,
+      rgba(26, 107, 90, 0.05) 39px);
+}
+
+/* ── Night radiant glow ── */
+body.night-mode .landing-hero::after {
+  background: radial-gradient(ellipse, rgba(201, 168, 76, 0.22) 0%, transparent 70%);
+}
+
+/* ── Stars layer (night only) ── */
+.landing-hero-stars {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.night-mode .landing-hero-stars {
+  display: block;
+}
+
+.landing-hero-stars span {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  animation: starTwinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+}
+
+@keyframes starTwinkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* ── Ensure hero content sits above overlays ── */
+.landing-hero-inner,
+.landing-scroll-hint {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Hero bottom fade transition ── */
+.landing-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, #f5f0e0);
+  pointer-events: none;
+  z-index: 1;
+  transition: background 0.55s ease;
+}
+
+body.night-mode .landing-hero-fade {
+  background: linear-gradient(to bottom, transparent, #0a1628);
+}
+
+.landing-hero-inner {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.landing-icon-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.landing-icon-wrap img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 4px 20px rgba(201, 168, 76, 0.40));
+}
+
+.landing-icon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 168, 76, 0.40);
+  animation: ringPulse 2.8s ease-in-out infinite;
+}
+
+.landing-icon-ring-2 {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.20);
+  animation: ringPulse 2.8s ease-in-out infinite 1.4s;
+}
+
+@keyframes ringPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.landing-bismillah {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.landing-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text);
+  margin: 0;
+}
+
+.landing-title span {
+  color: var(--gold);
+  display: inline-block;
+}
+
+.landing-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--day-subtext);
+  max-width: 540px;
+  line-height: 1.75;
+}
+
+body.night-mode .landing-subtitle {
+  color: var(--night-subtext);
+}
+
+.landing-hero-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border-radius: 2px;
+  margin: 4px 0;
+}
+
+.landing-stats {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.landing-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.landing-stat-num {
+  font-family: 'Amiri', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.landing-stat-label {
+  font-size: 0.8rem;
+  color: var(--day-subtext);
+  white-space: nowrap;
+}
+
+body.night-mode .landing-stat-label {
+  color: var(--night-subtext);
+}
+
+.landing-cta-group {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.landing-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #1e7264, #145244);
+  color: white;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(30, 114, 100, 0.35);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.landing-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(30, 114, 100, 0.45);
+}
+
+.landing-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid rgba(201, 168, 76, 0.50);
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.landing-cta-secondary:hover {
+  background: rgba(201, 168, 76, 0.10);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.20);
+}
+
+.landing-scroll-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  font-size: 0.75rem;
+  opacity: 0.6;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+/* ── Section headers ── */
+.landing-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.landing-section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: rgba(139, 108, 200, 0.12);
+  border: 1px solid rgba(139, 108, 200, 0.28);
+  border-radius: 50px;
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.landing-section-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.landing-section-sub {
+  font-size: 0.95rem;
+  color: var(--day-subtext);
+  max-width: 520px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+body.night-mode .landing-section-sub {
+  color: var(--night-subtext);
+}
+
+/* ── Devices Mockup ── */
+.landing-devices-section {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.landing-devices-showcase {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.device-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.device-label {
+  font-size: 0.78rem;
+  color: var(--day-subtext);
+  font-weight: 500;
+}
+
+body.night-mode .device-label {
+  color: var(--night-subtext);
+}
+
+.device-frame {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.device-screen {
+  background: #0a1628;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.device-screen-inner {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ds-navbar {
+  display: flex;
+  gap: 3px;
+  padding: 3px 4px;
+  background: rgba(26, 71, 49, 0.9);
+  border-radius: 4px;
+}
+
+.ds-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(139, 108, 200, 0.6);
+}
+
+.ds-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+}
+
+.ds-hero-icon {
+  font-size: 1rem;
+}
+
+.ds-hero-line {
+  height: 4px;
+  width: 80%;
+  background: rgba(139, 108, 200, 0.4);
+  border-radius: 2px;
+}
+
+.ds-hero-line.ds-short {
+  width: 55%;
+  opacity: 0.6;
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.ds-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ds-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.ds-card {
+  height: 22px;
+  background: linear-gradient(145deg, rgba(26, 114, 100, 0.7), rgba(14, 77, 64, 0.5));
+  border-radius: 4px;
+}
+
+.device-desktop .device-frame {
+  width: 220px;
+}
+
+.device-desktop .device-screen {
+  height: 130px;
+}
+
+.device-stand {
+  width: 40px;
+  height: 10px;
+  background: #222;
+  margin: 0 auto;
+}
+
+.device-base {
+  width: 70px;
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.device-tablet .device-frame {
+  width: 140px;
+  border-radius: 12px;
+}
+
+.device-tablet .device-screen {
+  height: 180px;
+}
+
+.device-home-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  margin: 6px auto 0;
+}
+
+.device-mobile .device-frame {
+  width: 80px;
+  border-radius: 16px;
+}
+
+.device-mobile .device-screen {
+  height: 160px;
+}
+
+.device-notch {
+  width: 28px;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  margin: 0 auto 4px;
+}
+
+.device-home-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #333;
+  margin: 6px auto 0;
+}
+
+.ds-navbar-sm {
+  padding: 2px 3px;
+}
+
+.ds-hero-sm {
+  padding: 4px 3px;
+  gap: 2px;
+}
+
+/* ── Verse Banner ── */
+.landing-verse-banner {
+  width: 100%;
+  background: linear-gradient(135deg, #1a4731 0%, #0d3d31 50%, #1a4731 100%);
+  padding: 40px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-verse-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 108, 200, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(139, 108, 200, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.landing-verse-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-verse-text {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: #e8d49a;
+  line-height: 2;
+  margin-bottom: 14px;
+}
+
+.landing-verse-source {
+  font-size: 0.82rem;
+  color: rgba(232, 196, 100, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ── Pages Grid ── */
+.landing-pages-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.landing-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.landing-page-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 18px;
+  background: white;
+  border: 1px solid rgba(26, 107, 90, 0.12);
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--day-text);
+  text-align: center;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.landing-page-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(26, 107, 90, 0.15);
+  border-color: rgba(139, 108, 200, 0.40);
+}
+
+.landing-page-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e7264, #145244);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: white;
+  box-shadow: 0 4px 14px rgba(30, 114, 100, 0.30);
+}
+
+.landing-page-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1a2a1a;
+}
+
+.landing-page-card-desc {
+  font-size: 0.78rem;
+  color: #6a7a6a;
+  line-height: 1.5;
+}
+
+/* ── Hadith Section ── */
+.landing-hadith-section {
+  width: 100%;
+  padding: 60px 24px;
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(26, 107, 90, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 60%, rgba(26, 107, 90, 0.04) 0%, transparent 50%),
+    transparent;
+}
+
+body.night-mode .landing-hadith-section {
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(27, 61, 102, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 60%, rgba(20, 45, 90, 0.2) 0%, transparent 50%),
+    transparent;
+}
+
+.landing-hadith-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.landing-hadiths-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.landing-hadith-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid rgba(139, 108, 200, 0.18);
+  border-right: 3px solid var(--gold);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-hadith-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+}
+
+.landing-hadith-label {
+  font-size: 0.75rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.landing-hadith-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: #2a3020;
+  flex: 1;
+}
+
+body.night-mode .landing-hadith-text {
+  color: var(--night-text);
+}
+
+.landing-hadith-source {
+  font-size: 0.75rem;
+  color: var(--gold-dark);
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-top: 1px solid rgba(139, 108, 200, 0.15);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+/* ── Features Grid ── */
+.landing-features-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.landing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.landing-feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  background: white;
+  border: 1px solid rgba(26, 107, 90, 0.10);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(26, 107, 90, 0.12);
+}
+
+.landing-feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(30, 114, 100, 0.15), rgba(30, 114, 100, 0.08));
+  border: 1px solid rgba(30, 114, 100, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--day-primary);
+  flex-shrink: 0;
+}
+
+body.night-mode .landing-feature-icon {
+  color: var(--gold-light);
+  background: rgba(139, 108, 200, 0.10);
+  border-color: rgba(139, 108, 200, 0.20);
+}
+
+.landing-feature-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.landing-feature-content h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--day-text);
+  margin: 0;
+}
+
+body.night-mode .landing-feature-content h4 {
+  color: var(--night-text);
+}
+
+.landing-feature-content p {
+  font-size: 0.8rem;
+  color: var(--day-subtext);
+  line-height: 1.5;
+  margin: 0;
+}
+
+body.night-mode .landing-feature-content p {
+  color: var(--night-subtext);
+}
+
+/* ── Night mode overrides for landing page ── */
+body.night-mode .landing-page-card {
+  background: rgba(13, 27, 50, 0.82);
+  border: 1px solid rgba(139, 108, 200, 0.12);
+  color: var(--night-text);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
+}
+
+body.night-mode .landing-page-card:hover {
+  border-color: rgba(139, 108, 200, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.40);
+}
+
+body.night-mode .landing-page-card-name {
+  color: var(--night-text);
+}
+
+body.night-mode .landing-page-card-desc {
+  color: var(--night-subtext);
+}
+
+body.night-mode .landing-feature-card {
+  background: rgba(13, 27, 50, 0.75);
+  border: 1px solid rgba(139, 108, 200, 0.09);
+  color: var(--night-text);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.20);
+}
+
+body.night-mode .landing-hadith-card {
+  background: rgba(13, 27, 50, 0.78);
+  border: 1px solid rgba(139, 108, 200, 0.12);
+  border-right: 3px solid var(--gold-dark);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
+body.night-mode .landing-hadith-label {
+  color: var(--gold-light);
+}
+
+body.night-mode .about-card {
+  background: #0f1e30;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.45);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   🎨 THEME TOGGLE BUTTON ENHANCEMENT
+   ───────────────────────────────────────────────────────────── */
+.theme-toggle-btn i {
+  transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.28s ease;
+}
+
+body.night-mode .theme-toggle-btn {
+  background: rgba(139, 108, 200, 0.16);
+  border-color: rgba(139, 108, 200, 0.32);
+  color: var(--gold-light);
+}
+
+body.night-mode .theme-toggle-btn:hover {
+  background: rgba(139, 108, 200, 0.28);
+  color: var(--gold);
+  box-shadow: 0 4px 16px rgba(139, 108, 200, 0.25);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   🌟 RIPPLE ANIMATION for mode buttons
+   ───────────────────────────────────────────────────────────── */
+@keyframes modeRipple {
+  to {
+    transform: translate(-50%, -50%) scale(22);
+    opacity: 0;
+  }
+}
+
+
+
 /* ===== Base ===== */
 *,
 *::before,
@@ -85,7 +1831,7 @@ body {
   pointer-events: none;
   background:
     radial-gradient(ellipse at 20% 50%, rgba(26, 107, 90, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 108, 200, 0.10) 0%, transparent 45%),
     linear-gradient(160deg, #030c18 0%, #071e38 45%, #061a14 100%);
   transform: translateY(100%);
   transition: transform 0.42s cubic-bezier(0.76, 0, 0.24, 1);
@@ -96,12 +1842,14 @@ body {
   overflow: hidden;
 }
 
+/* Islamic pattern overlay */
 #pageTransitionOverlay::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(201,168,76,0.06)' stroke-width='0.5'%3E%3Cpolygon points='40,4 76,22 76,58 40,76 4,58 4,22'/%3E%3Cpolygon points='40,18 62,30 62,50 40,62 18,50 18,30'/%3E%3Cline x1='40' y1='4' x2='40' y2='76'/%3E%3Cline x1='4' y1='22' x2='76' y2='58'/%3E%3Cline x1='76' y1='22' x2='4' y2='58'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(139, 108, 200,0.06)' stroke-width='0.5'%3E%3Cpolygon points='40,4 76,22 76,58 40,76 4,58 4,22'/%3E%3Cpolygon points='40,18 62,30 62,50 40,62 18,50 18,30'/%3E%3Cline x1='40' y1='4' x2='40' y2='76'/%3E%3Cline x1='4' y1='22' x2='76' y2='58'/%3E%3Cline x1='76' y1='22' x2='4' y2='58'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 80px 80px;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -139,25 +1887,25 @@ body {
 }
 
 .pt-overlay-logo img {
-  height: 56px;
-  width: 56px;
+  height: 52px;
+  width: 52px;
   object-fit: contain;
-  filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.5));
+  filter: drop-shadow(0 0 18px rgba(139, 108, 200, 0.45));
 }
 
 .pt-overlay-brand {
   font-family: "Amiri", serif;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.04em;
-  text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
+  text-shadow: 0 0 30px rgba(139, 108, 200, 0.4);
 }
 
 .pt-overlay-divider {
   width: 120px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
   animation: ptShimmer 1.5s ease-in-out infinite;
 }
 
@@ -178,12 +1926,13 @@ body {
 .pt-overlay-bismillah {
   font-family: "Amiri Quran", "Amiri", serif;
   font-size: clamp(1rem, 3.5vw, 1.3rem);
-  color: #c9a84c;
+  color: var(--gold);
   opacity: 0.9;
   letter-spacing: 0.06em;
   text-align: center;
 }
 
+/* Page enter animation */
 html.page-entering body>*:not(#pageTransitionOverlay):not(#preloader) {
   animation: pageEnterFade 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -230,7 +1979,7 @@ html.page-entering body>*:not(#pageTransitionOverlay):not(#preloader) {
 .loader-ring {
   width: 56px;
   height: 56px;
-  border: 2px solid rgba(201, 168, 76, 0.15);
+  border: 2px solid rgba(139, 108, 200, 0.15);
   border-top-color: var(--gold);
   border-right-color: var(--gold);
   border-radius: 50%;
@@ -545,7 +2294,7 @@ body.night-mode .drawer-nav a {
 body.night-mode .drawer-nav a:hover {
   background: rgba(43, 95, 138, 0.15);
   color: var(--gold-light);
-  border-right-color: rgba(201, 168, 76, 0.3);
+  border-right-color: rgba(139, 108, 200, 0.3);
 }
 
 .drawer-nav a.active {
@@ -557,7 +2306,7 @@ body.night-mode .drawer-nav a:hover {
 }
 
 body.night-mode .drawer-nav a.active {
-  background: rgba(201, 168, 76, 0.1);
+  background: rgba(139, 108, 200, 0.1);
   color: var(--gold-light);
   border-right-color: var(--gold);
 }
@@ -651,7 +2400,7 @@ body.night-mode .drawer-info-card p {
 }
 
 body.night-mode .drawer-social a {
-  background: rgba(201, 168, 76, 0.12);
+  background: rgba(139, 108, 200, 0.12);
   color: var(--gold-light);
 }
 
@@ -671,7 +2420,7 @@ body.night-mode .drawer-social a {
       rgba(255, 255, 255, 0) 100%),
     linear-gradient(135deg, #1d7060 0%, #145244 40%, #0d3d31 100%);
   box-shadow:
-    0 1px 0 rgba(201, 168, 76, 0.28),
+    0 1px 0 rgba(139, 108, 200, 0.28),
     0 4px 24px rgba(0, 0, 0, 0.22),
     0 12px 40px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);
@@ -684,7 +2433,7 @@ body.night-mode .site-header {
     linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%),
     linear-gradient(135deg, #1b3d66 0%, #112d50 40%, #0b2040 100%);
   box-shadow:
-    0 1px 0 rgba(201, 168, 76, 0.20),
+    0 1px 0 rgba(139, 108, 200, 0.20),
     0 4px 24px rgba(0, 0, 0, 0.40),
     0 12px 40px rgba(0, 0, 0, 0.25);
 }
@@ -769,7 +2518,7 @@ body.night-mode .site-header {
 
 .header-nav-inline a.active {
   color: var(--gold-light);
-  background: rgba(201, 168, 76, 0.13);
+  background: rgba(139, 108, 200, 0.13);
   font-weight: 700;
   border-bottom: 2px solid var(--gold);
 }
@@ -853,11 +2602,11 @@ body.night-mode .site-header {
 }
 
 .icon-btn:hover {
-  background: rgba(201, 168, 76, 0.18);
+  background: rgba(139, 108, 200, 0.18);
   color: var(--gold-light);
-  border-color: rgba(201, 168, 76, 0.40);
+  border-color: rgba(139, 108, 200, 0.40);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.2);
+  box-shadow: 0 4px 12px rgba(139, 108, 200, 0.2);
 }
 
 .mobile-menu-btn {
@@ -965,7 +2714,7 @@ body.night-mode .header-nav-strip::before {
 /* Active state */
 .header-nav a.active {
   color: var(--gold-light);
-  background: rgba(201, 168, 76, 0.10);
+  background: rgba(139, 108, 200, 0.10);
   font-weight: 700;
   border-bottom: 2px solid var(--gold);
 }
@@ -1020,6 +2769,13 @@ body.night-mode .header-nav-strip::before {
 
 body.night-mode .hero-bismillah {
   color: var(--gold-light);
+}
+
+/* morning-day-mode override — higher specificity wins */
+body[data-page="morning"].morning-day-mode .hero-bismillah,
+body.morning-day-mode .hero-bismillah {
+  color: var(--mdm-bismillah) !important;
+  text-shadow: 0 2px 16px var(--mdm-bismillah-shadow);
 }
 
 .hero-quote {
@@ -1118,9 +2874,10 @@ body.night-mode .mode-btn:hover {
 }
 
 .mode-btn.active-day {
-  background: linear-gradient(135deg, var(--day-primary), var(--day-secondary));
+  background: var(--mdm-btn-bg);
   color: white;
-  box-shadow: 0 4px 16px rgba(26, 107, 90, 0.4);
+  box-shadow: 0 4px 20px var(--mdm-btn-shadow), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  letter-spacing: 0.02em;
 }
 
 .mode-btn.active-night {
@@ -1228,8 +2985,8 @@ body.night-mode .progress-count {
 }
 
 body.night-mode .reset-btn {
-  background: rgba(201, 168, 76, 0.08);
-  border-color: rgba(201, 168, 76, 0.2);
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.2);
   color: var(--gold-light);
 }
 
@@ -1302,8 +3059,8 @@ body.night-mode .more-azkar-title {
 }
 
 body.night-mode .more-azkar-links a {
-  background: rgba(201, 168, 76, 0.07);
-  border-color: rgba(201, 168, 76, 0.15);
+  background: rgba(139, 108, 200, 0.07);
+  border-color: rgba(139, 108, 200, 0.15);
   color: var(--gold-light);
 }
 
@@ -1392,8 +3149,8 @@ body.night-mode .azkar-separator i {
 .box-badge {
   display: inline-flex;
   align-items: center;
-  background: rgba(201, 168, 76, 0.18);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+  background: rgba(139, 108, 200, 0.18);
+  border-bottom: 1px solid rgba(139, 108, 200, 0.25);
   color: var(--gold-light);
   font-size: 0.75rem;
   font-weight: 800;
@@ -1414,7 +3171,7 @@ body.night-mode .azkar-separator i {
 .zekr h3 {
   font-family: "Amiri Quran", serif;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
-  color: rgba(201, 168, 76, 0.7);
+  color: rgba(255, 255, 255, 0.55);
   font-weight: 400;
   margin-bottom: 10px;
   text-align: center;
@@ -1475,8 +3232,8 @@ body.night-mode .azkar-separator i {
 
 .smlNum.deactive,
 .smlNum:disabled {
-  background: rgba(201, 168, 76, 0.15);
-  border-color: rgba(201, 168, 76, 0.3);
+  background: rgba(139, 108, 200, 0.15);
+  border-color: rgba(139, 108, 200, 0.3);
   color: var(--gold-light);
   cursor: not-allowed;
   opacity: 0.8;
@@ -1605,8 +3362,8 @@ body.night-mode .sourceHidden {
 }
 
 body.night-mode .source-tag {
-  background: rgba(201, 168, 76, 0.1);
-  border-color: rgba(201, 168, 76, 0.25);
+  background: rgba(139, 108, 200, 0.1);
+  border-color: rgba(139, 108, 200, 0.25);
   color: var(--gold-light);
 }
 
@@ -1710,8 +3467,8 @@ body.night-mode .sub-hero-desc {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(201, 168, 76, 0.12);
-  border: 1px solid rgba(201, 168, 76, 0.25);
+  background: rgba(139, 108, 200, 0.12);
+  border: 1px solid rgba(139, 108, 200, 0.25);
   color: var(--gold-dark);
   padding: 6px 18px;
   border-radius: 50px;
@@ -1722,8 +3479,8 @@ body.night-mode .sub-hero-desc {
 
 body.night-mode .category-badge {
   color: var(--gold-light);
-  background: rgba(201, 168, 76, 0.08);
-  border-color: rgba(201, 168, 76, 0.2);
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.2);
 }
 
 /* Section separator in sub-pages */
@@ -1754,7 +3511,7 @@ body.night-mode .section-sep span {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(201, 168, 76, 0.25);
+  background: rgba(139, 108, 200, 0.25);
 }
 
 /* ===== About Section ===== */
@@ -1866,9 +3623,9 @@ body.night-mode .about-desc {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(201, 168, 76, 0.12);
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  color: #9c7d34;
+  background: rgba(139, 108, 200, 0.12);
+  border: 1px solid rgba(139, 108, 200, 0.3);
+  color: var(--gold-dark);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 4px 14px;
@@ -1878,8 +3635,8 @@ body.night-mode .about-desc {
 }
 
 body.night-mode .about-badge {
-  background: rgba(201, 168, 76, 0.1);
-  border-color: rgba(201, 168, 76, 0.2);
+  background: rgba(139, 108, 200, 0.1);
+  border-color: rgba(139, 108, 200, 0.2);
   color: var(--gold-light);
 }
 
@@ -1920,8 +3677,8 @@ body.night-mode .about-badge {
 }
 
 body.night-mode .about-social a {
-  background: rgba(201, 168, 76, 0.08);
-  border-color: rgba(201, 168, 76, 0.15);
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.15);
   color: var(--gold-light);
 }
 
@@ -1929,7 +3686,7 @@ body.night-mode .about-social a:hover {
   background: var(--gold);
   color: #1a1a1a;
   border-color: var(--gold);
-  box-shadow: 0 6px 16px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 6px 16px rgba(139, 108, 200, 0.3);
 }
 
 /* ===== Footer ===== */
@@ -2002,6 +3759,11 @@ body.night-mode .scroll-top {
 
 .scroll-top:hover {
   transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(26, 107, 90, 0.5);
+}
+
+.scroll-top:active {
+  transform: translateY(0) scale(0.95);
 }
 
 /* ===== Sub-page Progress Section ===== */
@@ -2096,8 +3858,8 @@ body.night-mode .sub-progress-count {
 }
 
 body.night-mode .sub-reset-btn {
-  background: rgba(201, 168, 76, 0.08);
-  border-color: rgba(201, 168, 76, 0.2);
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.2);
   color: var(--gold-light);
 }
 
@@ -2124,7 +3886,7 @@ body.night-mode .sub-reset-btn:hover {
 
 body.night-mode .dyk-card {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(201, 168, 76, 0.1);
+  border-color: rgba(139, 108, 200, 0.1);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -2254,8 +4016,8 @@ body.night-mode .dyk-text {
 }
 
 body.night-mode .dyk-source {
-  background: rgba(201, 168, 76, 0.08);
-  border-color: rgba(201, 168, 76, 0.15);
+  background: rgba(139, 108, 200, 0.08);
+  border-color: rgba(139, 108, 200, 0.15);
   color: var(--gold-light);
 }
 
@@ -2343,16 +4105,16 @@ body.night-mode .dyk-dot.active {
   }
 }
 
-/* Smaller screens 769–900px — icon + short text */
+/* Smaller screens 769–900px — icons only, no text */
 @media (max-width: 900px) and (min-width: 769px) {
   .header-nav-inline a {
-    font-size: 0.65rem;
-    padding: 5px 6px;
-    gap: 3px;
+    font-size: 0;
+    padding: 7px 8px;
+    gap: 0;
   }
 
   .header-nav-inline a i {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     opacity: 1;
   }
 

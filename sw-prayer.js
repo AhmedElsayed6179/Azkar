@@ -1,22 +1,3 @@
-// ============================================================
-//  SERVICE WORKER — أذكار PWA v6
-//  ✅ Full PWA support: background sync, audio, offline cache
-//
-//  Audio strategy in PWA (installed on homescreen):
-//  - PWA mode = browser treats it like a native app
-//  - When user taps notification → app opens as standalone window
-//  - That window load triggers autoplay with user-gesture context
-//  - Audio IS allowed in this context
-//
-//  Reliability layers:
-//  1. IndexedDB        — schedule persists across SW restarts
-//  2. Periodic Sync    — OS wakes SW every ~15min (Android Chrome/Edge)
-//  3. Self-heal timers — 12min reschedule loop inside SW
-//  4. Missed-prayer    — catch prayers fired while SW was asleep
-//  5. Deduplication    — never fire same prayer twice
-//  6. Offline cache    — full app works without internet (PWA)
-// ============================================================
-
 const SW_VERSION = 'azkar-pwa-v6';
 const DB_NAME    = 'azkar-sw-db';
 const DB_VERSION = 2;

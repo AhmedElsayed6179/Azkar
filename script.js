@@ -85,6 +85,68 @@ function showToast(msg) {
   setTimeout(() => alertToast.classList.remove('show'), 3000);
 }
 
+// ====== Global Dark / Light Theme Toggle ======
+// Applied to ALL pages. Key: 'ThemeMode' = 'dark' | 'light'
+// On azkar-morning page, dark mode is also the "night azkar" mode — handled separately below.
+(function setupGlobalTheme() {
+  const STORAGE_KEY = 'ThemeMode';
+
+  function applyTheme(mode) {
+    // Morning page has its own day/evening mode — skip global theme there
+    if (document.body.getAttribute('data-page') === 'morning') return;
+    if (mode === 'dark') {
+      document.body.classList.add('night-mode');
+    } else {
+      document.body.classList.remove('night-mode');
+    }
+    // Update any theme toggle buttons that exist on this page
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+      const iconEl = btn.querySelector('i');
+      if (!iconEl) return;
+      if (mode === 'dark') {
+        iconEl.className = 'fa-solid fa-sun';
+        btn.title = 'الوضع النهاري';
+      } else {
+        iconEl.className = 'fa-solid fa-moon';
+        btn.title = 'الوضع الليلي';
+      }
+    });
+  }
+
+  function toggleTheme() {
+    const current = localStorage.getItem(STORAGE_KEY) || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORAGE_KEY, next);
+    applyTheme(next);
+    showToast(next === 'dark' ? 'تم التبديل للوضع الليلي 🌙' : 'تم التبديل للوضع النهاري ☀️');
+  }
+
+  // Determine initial theme
+  function getInitialTheme() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return saved;
+    // Auto-detect by time: night = 18:00–06:00
+    const h = new Date().getHours();
+    return (h >= 18 || h < 6) ? 'dark' : 'light';
+  }
+
+  // Apply on load (immediately, before DOMContentLoaded to avoid flash)
+  applyTheme(getInitialTheme());
+
+  // Bind toggle buttons after DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(getInitialTheme()); // re-apply after DOM
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', toggleTheme);
+    });
+  });
+
+  // Expose globally so azkar-morning page can also call it
+  window.toggleGlobalTheme = toggleTheme;
+  window.applyGlobalTheme = applyTheme;
+  window.getGlobalTheme = () => localStorage.getItem(STORAGE_KEY) || 'light';
+})()
+
 // ====== Share Link ======
 if (shareLinkBtn) {
   shareLinkBtn.addEventListener('click', () => {
@@ -181,7 +243,7 @@ function setDayMode() {
     btnDay.classList.remove('active-night');
   }
   if (btnNight) btnNight.classList.remove('active-day', 'active-night');
-  document.body.classList.remove('night-mode');
+  document.body.classList.remove('evening-mode'); document.body.classList.add('morning-day-mode');
   if (progressLabel) progressLabel.textContent = 'أذكار الصباح';
   localStorage.setItem('AzkarMode', 'day');
   updateProgress();
@@ -197,7 +259,7 @@ function setNightMode() {
     btnNight.classList.remove('active-day');
   }
   if (btnDay) btnDay.classList.remove('active-day', 'active-night');
-  document.body.classList.add('night-mode');
+  document.body.classList.add('evening-mode'); document.body.classList.remove('morning-day-mode');
   if (progressLabel) progressLabel.textContent = 'أذكار المساء';
   localStorage.setItem('AzkarMode', 'night');
   updateProgress();
@@ -574,48 +636,48 @@ window.addEventListener('load', () => {
 });
 
 // ====== Web Content Protection and DevTools Disabling Script ======
-(function() {
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
+(function () {
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
 
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123) {
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
-            return false;
-        }
-    };
+  document.onkeydown = function (e) {
+    if (e.keyCode == 123) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
+      return false;
+    }
+  };
 
-    const checkStatus = () => {
-        const start = new Date();
-        debugger;
-        const end = new Date();
-        if (end - start > 100) {
-            document.body.innerHTML = "Access Denied";
-        }
-    };
+  const checkStatus = () => {
+    const start = new Date();
+    debugger;
+    const end = new Date();
+    if (end - start > 100) {
+      document.body.innerHTML = "Access Denied";
+    }
+  };
 
-    setInterval(checkStatus, 1000);
+  setInterval(checkStatus, 1000);
 
-    document.addEventListener('dragstart', function(e) {
-        if (e.target.nodeName === 'IMG') {
-            e.preventDefault();
-        }
-    });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.nodeName === 'IMG') {
+      e.preventDefault();
+    }
+  });
 })();
 
 // ====== PWA — Service Worker Registration + Install Prompt ======
@@ -655,7 +717,7 @@ window.addEventListener('load', () => {
     // Don't show if already installed or already dismissed
     if (localStorage.getItem('azkarPWAInstalled') === '1') return;
     if (localStorage.getItem('azkarPWADismissed') === '1') return;
-    if (document.getElementById('pwaInstallBanner'))       return;
+    if (document.getElementById('pwaInstallBanner')) return;
 
     var banner = document.createElement('div');
     banner.id = 'pwaInstallBanner';
@@ -674,24 +736,24 @@ window.addEventListener('load', () => {
     banner.innerHTML = [
       '<div style="font-size:2rem;flex-shrink:0">📲</div>',
       '<div style="flex:1;min-width:0">',
-        '<div style="font-weight:700;font-size:0.92rem;margin-bottom:2px">ثبّت تطبيق أذكار</div>',
-        '<div style="font-size:0.74rem;opacity:0.65;line-height:1.4">',
-          'ثبّته على شاشتك الرئيسية للحصول على إشعارات الصلاة مع الأذان حتى لو أغلقت المتصفح',
-        '</div>',
+      '<div style="font-weight:700;font-size:0.92rem;margin-bottom:2px">ثبّت تطبيق أذكار</div>',
+      '<div style="font-size:0.74rem;opacity:0.65;line-height:1.4">',
+      'ثبّته على شاشتك الرئيسية للحصول على إشعارات الصلاة مع الأذان حتى لو أغلقت المتصفح',
+      '</div>',
       '</div>',
       '<div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">',
-        '<button id="pwaBtnInstall" style="',
-          'background:linear-gradient(135deg,#c9a84c,#e0c070);',
-          'color:#0a1f14;border:none;border-radius:12px;',
-          'padding:8px 14px;font-family:inherit;font-size:0.8rem;',
-          'font-weight:800;cursor:pointer;white-space:nowrap;',
-          'box-shadow:0 4px 12px rgba(201,168,76,0.3)',
-        '">تثبيت</button>',
-        '<button id="pwaBtnDismiss" style="',
-          'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);',
-          'border:1px solid rgba(255,255,255,0.1);border-radius:12px;',
-          'padding:6px 14px;font-family:inherit;font-size:0.75rem;cursor:pointer',
-        '">لاحقاً</button>',
+      '<button id="pwaBtnInstall" style="',
+      'background:linear-gradient(135deg,#c9a84c,#e0c070);',
+      'color:#0a1f14;border:none;border-radius:12px;',
+      'padding:8px 14px;font-family:inherit;font-size:0.8rem;',
+      'font-weight:800;cursor:pointer;white-space:nowrap;',
+      'box-shadow:0 4px 12px rgba(201,168,76,0.3)',
+      '">تثبيت</button>',
+      '<button id="pwaBtnDismiss" style="',
+      'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);',
+      'border:1px solid rgba(255,255,255,0.1);border-radius:12px;',
+      'padding:6px 14px;font-family:inherit;font-size:0.75rem;cursor:pointer',
+      '">لاحقاً</button>',
       '</div>'
     ].join('');
 
@@ -768,11 +830,126 @@ window.addEventListener('load', () => {
 
   // ── 4. Detect if running as installed PWA ─────────────────────
   var isPWA = window.matchMedia('(display-mode: standalone)').matches
-            || window.navigator.standalone === true;
+    || window.navigator.standalone === true;
   if (isPWA) {
     document.documentElement.classList.add('pwa-mode');
     localStorage.setItem('azkarPWAInstalled', '1');
     console.log('[PWA] Running as installed PWA');
   }
 
+})();
+
+
+/* ============================================================
+   AZKAR v4.1 — ENHANCED THEME & MODE SYSTEM
+   ============================================================ */
+
+/* ── Morning Page: Enhanced Day/Evening visual mode ── */
+(function enhanceMorningPage() {
+  if (document.body.getAttribute('data-page') !== 'morning') return;
+
+  /* Ripple keyframe injection */
+  if (!document.getElementById('azkarRippleStyle')) {
+    const st = document.createElement('style');
+    st.id = 'azkarRippleStyle';
+    st.textContent = '@keyframes azkarModeRipple { to { transform: translate(-50%,-50%) scale(22); opacity:0; } }';
+    document.head.appendChild(st);
+  }
+
+  function createRipple(btn) {
+    const r = document.createElement('span');
+    r.style.cssText = [
+      'position:absolute; border-radius:50%; pointer-events:none',
+      'background:rgba(255,255,255,0.22); width:12px; height:12px',
+      'top:50%; left:50%; transform:translate(-50%,-50%) scale(0)',
+      'animation:azkarModeRipple 0.55s ease-out forwards'
+    ].join(';');
+    const prev = btn.style.position;
+    const prevOv = btn.style.overflow;
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(r);
+    setTimeout(() => {
+      r.remove();
+      btn.style.position = prev;
+      btn.style.overflow = prevOv;
+    }, 560);
+  }
+
+  function applyDayVisuals() {
+    document.body.classList.remove('evening-mode');
+    document.body.classList.add('morning-day-mode');
+    /* Update page title meta theme-color */
+    const tm = document.querySelector('meta[name="theme-color"]');
+    if (tm) tm.content = '#1a4731';
+  }
+
+  function applyEveningVisuals() {
+    document.body.classList.add('evening-mode');
+    document.body.classList.remove('morning-day-mode');
+    const tm = document.querySelector('meta[name="theme-color"]');
+    if (tm) tm.content = '#060d1c';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnDay = document.getElementById('btnDay');
+    const btnNight = document.getElementById('btnNight');
+
+    if (btnDay) {
+      btnDay.addEventListener('click', function () {
+        createRipple(this);
+        setTimeout(applyDayVisuals, 40);
+      });
+    }
+    if (btnNight) {
+      btnNight.addEventListener('click', function () {
+        createRipple(this);
+        setTimeout(applyEveningVisuals, 40);
+      });
+    }
+
+    /* Initial mode — synced with setDayMode/setNightMode in script.js */
+    const saved = localStorage.getItem('AzkarMode');
+    const hour = new Date().getHours();
+    const isEvening = saved === 'night' || (!saved && (hour >= 16 || hour < 5));
+    if (isEvening) applyEveningVisuals();
+    else applyDayVisuals();
+  });
+})();
+
+/* ── Global theme toggle icon animation ── */
+(function enhanceThemeToggleIcon() {
+  document.addEventListener('DOMContentLoaded', function () {
+    /* Whenever the theme changes, animate the icon */
+    const originalToggle = window.toggleGlobalTheme;
+    if (!originalToggle) return;
+    window.toggleGlobalTheme = function () {
+      const btns = document.querySelectorAll('.theme-toggle-btn');
+      btns.forEach(btn => {
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.style.transform = 'rotate(180deg) scale(0)';
+          icon.style.opacity = '0';
+          setTimeout(() => {
+            icon.style.transform = '';
+            icon.style.opacity = '';
+          }, 420);
+        }
+      });
+      originalToggle();
+    };
+  });
+})();
+
+/* ── Initial theme application before DOMContentLoaded to prevent flash ── */
+(function preventThemeFlash() {
+  if (document.body.getAttribute('data-page') === 'morning') return;
+  const saved = localStorage.getItem('ThemeMode');
+  const hour = new Date().getHours();
+  const isDark = saved === 'dark' || (!saved && (hour >= 18 || hour < 6));
+  if (isDark) {
+    document.body.classList.add('night-mode');
+  } else {
+    document.body.classList.remove('night-mode');
+  }
 })();
