@@ -39,6 +39,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
   <link rel="icon" href="assets/Background/Azkar-Icon.png" />
   <link rel="stylesheet" href="style.css" />
+  <!-- ⚡ Anti-flash: apply correct mode BEFORE first paint -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('AzkarMode');
+      var h = new Date().getHours();
+      var isEvening = saved === 'night' || (!saved && (h >= 16 || h < 5));
+      document.documentElement.setAttribute('data-preload-mode', isEvening ? 'evening' : 'day');
+    })();
+  </script>
+  <style>
+    .header-page-name {
+      color: var(--gold-light) !important;
+    }
+  </style>
 </head>
 
 <body data-page="morning" class="morning-day-mode">
@@ -93,16 +107,13 @@
       <div class="drawer-info">
         <div class="drawer-info-card">
           <h3>موقع أذكار</h3>
-          <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ — غير مخصص للربح، فقط للتذكير بصحيح الأحاديث</p>
-          <p style="margin-top:8px;font-size:0.78rem;opacity:0.55">بفضل الله أنشأه: أحمد محمد</p>
+          <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ</p>
           <div class="drawer-social">
             <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
             <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-            <a href="/cdn-cgi/l/email-protection#77161f1a1213121b04160e12134146404e37101a161e1b5914181a"
+            <a href="/cdn-cgi/l/email-protection#d0b1b8bdb5b4b5bca3b1a9b5b4e6e1e7e990b7bdb1b9bcfeb3bfbd"
               target="_blank"><i class="fa-solid fa-envelope"></i></a>
-            <a href="https://www.instagram.com/ahmedelsayed25" target="_blank"><i
-                class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
       </div>

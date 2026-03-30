@@ -74,7 +74,7 @@
   --max-w: 820px;
 }
 
-body.night-mode {
+body.night-mode:not([data-page="morning"]) {
   --primary: var(--night-primary);
   --bg: var(--night-bg);
   --card: var(--night-card);
@@ -104,6 +104,43 @@ body:not([data-page="morning"]):not(.night-mode) {
     radial-gradient(ellipse at 80% 0%, rgba(26, 107, 90, 0.09) 0%, transparent 50%),
     radial-gradient(ellipse at 10% 60%, rgba(26, 107, 90, 0.06) 0%, transparent 50%),
     #f4f0e6;
+}
+
+/* ══════════════════════════════════════════════════════
+   ⚡ ANTI-FLASH — data-preload-mode set by inline <head> script
+   بيشتغل قبل أي رسم للصفحة ويتحدّث مع كل ضغطة على الزرار
+   ══════════════════════════════════════════════════════ */
+html[data-preload-mode="evening"] body[data-page="morning"] {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(80, 60, 150, 0.38) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(100, 80, 190, 0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 12% 25%, rgba(60, 100, 190, 0.18) 0%, transparent 45%),
+    linear-gradient(180deg, #060d1c 0%, #0a1530 25%, #0c1c40 55%, #09152e 100%);
+  color: #dde6f5;
+}
+
+html[data-preload-mode="evening"] body[data-page="morning"] .mode-btn {
+  color: rgba(200, 218, 255, 0.45);
+}
+
+html[data-preload-mode="evening"] body[data-page="morning"] .mode-btn.active-night {
+  background: linear-gradient(135deg, #1a3d6e, #2b5f9e);
+  color: white;
+  box-shadow: 0 4px 20px rgba(26, 61, 110, 0.6);
+}
+
+html[data-preload-mode="day"] body[data-page="morning"] .mode-btn.active-day {
+  background: var(--mdm-btn-bg);
+  color: white;
+  box-shadow: 0 4px 20px var(--mdm-btn-shadow);
+}
+
+html[data-preload-mode="day"] body[data-page="morning"] .mode-btn.active-night,
+html[data-preload-mode="evening"] body[data-page="morning"] .mode-btn.active-day {
+  /* inactive state — no background override needed, handled by JS */
+  background: transparent;
+  color: inherit;
+  box-shadow: none;
 }
 
 body[data-page="morning"] {
@@ -230,20 +267,35 @@ body[data-page="morning"] .progress-section,
 body[data-page="morning"] .azkar-section,
 body[data-page="morning"] .more-azkar-wrap,
 body[data-page="morning"] .dyk-section,
-body[data-page="morning"] .site-footer,
-body[data-page="morning"] .mobile-drawer {
+body[data-page="morning"] .site-footer {
   position: relative;
   z-index: 1;
   width: 100%;
   align-self: stretch;
 }
 
+/* mobile-drawer لازم يفضل fixed فوق كل حاجة */
+body[data-page="morning"] .mobile-drawer {
+  position: fixed !important;
+  z-index: 1000 !important;
+  width: auto !important;
+  align-self: auto !important;
+}
+
 /* Keep fixed-position elements unaffected by flex stretch */
 body[data-page="morning"] .modal-overlay,
-body[data-page="morning"] #scrollTopBtn,
 body[data-page="morning"] .alert-toast {
   position: fixed !important;
   width: auto;
+  align-self: auto;
+}
+
+/* scroll-top — حجم ثابت 48×48 */
+body[data-page="morning"] #scrollTopBtn {
+  position: fixed !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 14px !important;
   align-self: auto;
 }
 
@@ -345,6 +397,13 @@ body[data-page="morning"].evening-mode .mode-btn {
 
 body[data-page="morning"].evening-mode .mode-btn:hover {
   color: rgba(200, 218, 255, 0.82);
+}
+
+body[data-page="morning"].evening-mode .mode-btn.active-night {
+  background: linear-gradient(135deg, #1a3d6e, #2b5f9e);
+  color: white;
+  box-shadow: 0 4px 20px rgba(26, 61, 110, 0.6), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  letter-spacing: 0.02em;
 }
 
 /* ── PROGRESS CARD ── */
@@ -1272,6 +1331,18 @@ body.night-mode .landing-section-sub {
   color: var(--night-subtext);
 }
 
+body.night-mode .landing-title {
+  color: var(--night-text);
+}
+
+body.night-mode .landing-section-title {
+  color: var(--night-text);
+}
+
+body.night-mode .landing-subtitle {
+  color: var(--night-subtext);
+}
+
 /* ── Devices Mockup ── */
 .landing-devices-section {
   width: 100%;
@@ -1426,28 +1497,67 @@ body.night-mode .device-label {
 }
 
 .device-mobile .device-frame {
-  width: 80px;
-  border-radius: 16px;
+  width: 88px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #2e2e2e 0%, #1a1a1a 60%, #252525 100%);
+  padding: 6px;
+  box-shadow:
+    0 0 0 1.5px rgba(255, 255, 255, 0.10),
+    0 0 0 3px rgba(0, 0, 0, 0.6),
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+/* Side buttons */
+.device-mobile .device-frame::before {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 28px;
+  width: 3px;
+  height: 26px;
+  background: #222;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 18px 0 #222;
+}
+
+.device-mobile .device-frame::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 22px;
+  width: 3px;
+  height: 18px;
+  background: #222;
+  border-radius: 2px 0 0 2px;
+  box-shadow: 0 24px 0 #222, 0 44px 0 #222;
 }
 
 .device-mobile .device-screen {
-  height: 160px;
+  height: 168px;
+  border-radius: 17px;
+  background: linear-gradient(180deg, #0a1628 0%, #0d1e35 100%);
+  overflow: hidden;
+  position: relative;
 }
 
+
 .device-notch {
-  width: 28px;
-  height: 6px;
-  background: #1a1a1a;
+  width: 22px;
+  height: 5px;
+  background: #0a1628;
   border-radius: 3px;
-  margin: 0 auto 4px;
+  margin: 5px auto 3px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .device-home-circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1.5px solid #333;
-  margin: 6px auto 0;
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.22);
+  margin: 7px auto 0;
 }
 
 .ds-navbar-sm {

@@ -107,10 +107,13 @@
         <div class="drawer-info-card">
           <h3>موقع أذكار</h3>
           <p>يذكرك بالأذكار اليومية الصحيحة الثابتة عن النبيﷺ — غير مخصص للربح، فقط للتذكير بصحيح الأحاديث</p>
+          <p style="margin-top:8px;font-size:0.78rem;opacity:0.55">بفضل الله أنشأه: أحمد محمد</p>
           <div class="drawer-social">
             <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
             <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="/cdn-cgi/l/email-protection#77161f1a1213121b04160e12134146404e37101a161e1b5914181a"
+              target="_blank"><i class="fa-solid fa-envelope"></i></a>
             <a href="https://www.instagram.com/ahmedelsayed25" target="_blank"><i
                 class="fa-brands fa-instagram"></i></a>
           </div>
@@ -280,20 +283,22 @@
       </div>
       <div class="device-wrap device-mobile">
         <div class="device-frame">
-          <div class="device-notch"></div>
           <div class="device-screen">
             <div class="device-screen-inner">
+              <div class="device-notch"></div>
               <div class="ds-navbar ds-navbar-sm">
                 <div class="ds-dot"></div>
+                <div class="ds-dot" style="margin-right:auto"></div>
               </div>
               <div class="ds-hero ds-hero-sm">
                 <div class="ds-hero-icon">📿</div>
                 <div class="ds-hero-line"></div>
+                <div class="ds-hero-line ds-short"></div>
               </div>
               <div class="ds-grid ds-grid-1">
                 <div class="ds-card"></div>
                 <div class="ds-card"></div>
-                <div class="ds-card"></div>
+                <div class="ds-card" style="opacity:0.6"></div>
               </div>
             </div>
           </div>
@@ -563,7 +568,8 @@
         <a href="https://wa.me/qr/ZIGFPTFHFBYYM1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://t.me/ahmedelsayed25" target="_blank"><i class="fa-brands fa-telegram"></i></a>
         <a href="https://www.facebook.com/ahmedelsayed38" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-        <a href="mailto:ahmedelsayed6179@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+        <a href="/cdn-cgi/l/email-protection#4120292c2425242d32203824257770767801262c20282d6f222e2c" target="_blank"><i
+            class="fa-solid fa-envelope"></i></a>
         <a href="https://www.instagram.com/ahmedelsayed25" target="_blank"><i class="fa-brands fa-instagram"></i></a>
       </div>
     </div>
@@ -580,17 +586,19 @@
   <button class="scroll-top" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button>
 
 
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="script.js"></script>
+
   <script>
-
-
-
     // ── Animate cards on scroll ──
     const cards = document.querySelectorAll('.landing-page-card, .landing-hadith-card, .landing-feature-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          setTimeout(() => { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; }, i * 60);
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 60);
           observer.unobserve(entry.target);
         }
       });
@@ -598,11 +606,10 @@
     cards.forEach(card => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(24px)';
-      card.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease';
-      observer.observe(card);
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     });
+    observer.observe && cards.forEach(card => observer.observe(card));
   </script>
-
 </body>
 
 </html>

@@ -244,6 +244,7 @@ function setDayMode() {
   }
   if (btnNight) btnNight.classList.remove('active-day', 'active-night');
   document.body.classList.remove('evening-mode'); document.body.classList.add('morning-day-mode');
+  document.documentElement.setAttribute('data-preload-mode', 'day');
   if (progressLabel) progressLabel.textContent = 'أذكار الصباح';
   localStorage.setItem('AzkarMode', 'day');
   updateProgress();
@@ -260,6 +261,7 @@ function setNightMode() {
   }
   if (btnDay) btnDay.classList.remove('active-day', 'active-night');
   document.body.classList.add('evening-mode'); document.body.classList.remove('morning-day-mode');
+  document.documentElement.setAttribute('data-preload-mode', 'evening');
   if (progressLabel) progressLabel.textContent = 'أذكار المساء';
   localStorage.setItem('AzkarMode', 'night');
   updateProgress();
