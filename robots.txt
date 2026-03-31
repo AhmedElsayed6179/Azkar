@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://azkar-daily.netlify.app/sitemap.xml
