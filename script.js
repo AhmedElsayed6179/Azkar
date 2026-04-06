@@ -529,8 +529,6 @@ function initDYK() {
   setInterval(tick, 1000);
 }
 
-
-
 // ====== Reset (Index only) ======
 if (resetBtn) {
   resetBtn.addEventListener('click', () => {
@@ -572,6 +570,10 @@ if (modalConfirm) {
     if (resetModal) resetModal.classList.remove('open');
     updateProgress();
     showToast('تم إعادة تعيين الأذكار!');
+
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   });
 }
 
