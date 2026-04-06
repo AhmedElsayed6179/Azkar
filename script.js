@@ -521,25 +521,21 @@ function initDYK() {
   function tick() {
     const idx = getIndex();
     if (idx !== lastIdx) renderItem(idx);
-    if (timerEl) timerEl.textContent = formatTime(getRemaining());
-  }
 
-  // Run immediately then every second
-  tick();
-  setInterval(tick, 1000);
-}
-
-
-
-// ====== Reset (Index only) ======
-if (resetBtn) {
+    
+  // ====== Reset (Index only) ======
+  if (resetBtn) {
   resetBtn.addEventListener('click', () => {
     // Check if user has read any zekr at all
-    const anyRead = Object.keys(localStorage).some(k => k.startsWith('Read Zekr') && parseInt(localStorage.getItem(k)) > 0);
+    const anyRead = Object.keys(localStorage).some(
+      k => k.startsWith('Read Zekr') && parseInt(localStorage.getItem(k)) > 0
+    );
+
     if (!anyRead) {
       showToast('أنت لم تقرأ أي ذكر بعد!');
       return;
     }
+
     if (resetModal) resetModal.classList.add('open');
   });
 }
@@ -560,19 +556,36 @@ if (modalConfirm) {
   modalConfirm.addEventListener('click', () => {
     const keys = Object.keys(localStorage).filter(k => k.startsWith('Read Zekr'));
     keys.forEach(k => localStorage.removeItem(k));
+
     document.querySelectorAll('.smlNum').forEach(btn => {
       btn.disabled = false;
       btn.classList.remove('deactive');
+
       const spanEl = btn.querySelector('span:first-child');
       if (spanEl) spanEl.textContent = '0';
     });
+
     document.querySelectorAll('.box').forEach(b => b.classList.remove('completed'));
+
     if (azkarDay) setupButtons(azkarDay, 1);
     if (azkarNight) setupButtons(azkarNight, 100);
+
     if (resetModal) resetModal.classList.remove('open');
+
     updateProgress();
     showToast('تم إعادة تعيين الأذكار!');
+
+    // إعادة تحميل الصفحة بعد نصف ثانية
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   });
+    }  if (timerEl) timerEl.textContent = formatTime(getRemaining());
+  }
+
+  // Run immediately then every second
+  tick();
+  setInterval(tick, 1000);
 }
 
 // ====== Selection Color ======
