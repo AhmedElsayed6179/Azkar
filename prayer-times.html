@@ -34,6 +34,10 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="أذكار" />
+  <!-- ═══ Performance: preconnect to CDN ═══ -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
   <!-- ═══ Icons ═══ -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/Background/favicon.png">
@@ -45,6 +49,51 @@
        PRAYER TIMES — Premium Redesign
        Mobile-first · 320px → 1400px+ · Luxury Islamic Theme
     ====================================================== */
+
+    /* ── Mobile header-actions: 4 icon buttons nicely spaced ── */
+    @media (max-width: 1024px) {
+      .header-actions {
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .header-actions .icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.82rem;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+      /* Prevent page name from squeezing buttons */
+      .header-inner {
+        grid-template-columns: auto 1fr auto;
+      }
+      .header-page-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+    }
+    @media (max-width: 480px) {
+      .header-actions {
+        gap: 4px;
+      }
+      .header-actions .icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.8rem;
+        border-radius: 9px;
+      }
+    }
+    @media (max-width: 360px) {
+      .header-actions {
+        gap: 3px;
+      }
+      .header-actions .icon-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+      }
+    }
 
     /* ── Hero ── */
     .pt-hero {
@@ -1716,7 +1765,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="header-logo" href="index.html">
-        <img src="assets/Background/Azkar-Icon.png" alt="أذكار" />
+        <img src="assets/Background/Azkar-Icon.png" alt="أذكار" loading="eager" fetchpriority="high" width="40" height="40" />
         <div class="header-logo-text">
           <span class="header-logo-title">أذكار</span>
           <span class="header-logo-sub">أذكار المسلم اليومية</span>
@@ -2283,26 +2332,20 @@
         render(this.value);
       });
 
-      // Generate twinkling stars
+      // Generate twinkling stars — fewer on mobile for performance
       (function generateStars() {
         const container = document.getElementById('ptStars');
         if (!container) return;
-        const count = 60;
+        const count = window.innerWidth < 768 ? 30 : 60;
+        const frag = document.createDocumentFragment();
         for (let i = 0; i < count; i++) {
           const star = document.createElement('div');
           star.className = 'pt-star';
           const size = Math.random() * 2.5 + 0.5;
-          star.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        top: ${Math.random() * 100}%;
-        left: ${Math.random() * 100}%;
-        --dur: ${(Math.random() * 4 + 2).toFixed(1)}s;
-        --delay: ${(Math.random() * 5).toFixed(1)}s;
-        --max-op: ${(Math.random() * 0.6 + 0.3).toFixed(2)};
-      `;
-          container.appendChild(star);
+          star.style.cssText = `width:${size}px;height:${size}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--dur:${(Math.random() * 4 + 2).toFixed(1)}s;--delay:${(Math.random() * 5).toFixed(1)}s;--max-op:${(Math.random() * 0.6 + 0.3).toFixed(2)};`;
+          frag.appendChild(star);
         }
+        container.appendChild(frag);
       })();
 
       // Live clock — 12-hour format with seconds
@@ -3051,27 +3094,65 @@
         tryStartOrientation();
       };
 
+      function showNoGyroNote() {
+        const resultEl = document.getElementById('qiblaResult');
+        if (!resultEl || document.getElementById('compassStaticNote')) return;
+        // Remove any permission button if shown
+        const permBtn = document.getElementById('compassPermBtn');
+        if (permBtn) permBtn.closest('div').remove();
+        const note = document.createElement('div');
+        note.id = 'compassStaticNote';
+        note.style.cssText = 'text-align:center;margin-top:12px;font-size:0.82rem;color:var(--gold,#c9a84c);opacity:0.85;padding:10px 14px;background:rgba(201,168,76,0.08);border-radius:12px;border:1px solid rgba(201,168,76,0.18);line-height:1.7;font-family:inherit;direction:rtl;';
+        note.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="margin-left:6px;"></i> جهازك لا يدعم خاصية الجيروسكوب — الاتجاه المعروض ثابت بناءً على موقعك الجغرافي';
+        resultEl.appendChild(note);
+      }
+
       function tryStartOrientation() {
         if (_compassActive) return;
 
-        // iOS 13+ requires explicit permission
+        // iOS 13+ requires explicit permission (iPhone & iPad on iOS 13+)
         if (typeof DeviceOrientationEvent !== 'undefined' &&
           typeof DeviceOrientationEvent.requestPermission === 'function') {
           // Show a button to request permission (must be triggered by user gesture)
           showCompassPermBtn();
         } else if (typeof DeviceOrientationEvent !== 'undefined') {
-          attachOrientationListener();
+          // API exists — but does the device actually have a gyroscope?
+          // Probe: listen for 2 seconds and check if we get real non-null alpha values
+          probeGyroscope();
+        } else {
+          // DeviceOrientationEvent not supported at all (very old browser)
+          showNoGyroNote();
         }
-        // Desktop / unsupported: needle stays at static bearing — already set by requestQibla
-        // Show informational note for web/tablet users
-        const resultEl = document.getElementById('qiblaResult');
-        if (resultEl && !document.getElementById('compassStaticNote')) {
-          const note = document.createElement('div');
-          note.id = 'compassStaticNote';
-          note.style.cssText = 'text-align:center;margin-top:12px;font-size:0.82rem;color:var(--gold,#c9a84c);opacity:0.85;padding:10px 14px;background:rgba(201,168,76,0.08);border-radius:12px;border:1px solid rgba(201,168,76,0.18);line-height:1.5;font-family:inherit;';
-          note.innerHTML = '<i class="fa-solid fa-compass" style="margin-left:6px;"></i> البوصلة الحية تعمل على الهاتف فقط — الاتجاه المعروض ثابت بناءً على موقعك الجغرافي';
-          resultEl.appendChild(note);
+      }
+
+      function probeGyroscope() {
+        let probeTimer = null;
+        let probeReceived = false;
+
+        function onProbe(e) {
+          // A real gyroscope will fire with non-null alpha
+          const hasRealData = (e.alpha !== null && e.alpha !== undefined) ||
+            (e.webkitCompassHeading !== undefined && e.webkitCompassHeading !== null);
+          if (hasRealData) {
+            probeReceived = true;
+            clearTimeout(probeTimer);
+            window.removeEventListener('deviceorientationabsolute', onProbe, true);
+            window.removeEventListener('deviceorientation', onProbe, true);
+            attachOrientationListener();
+          }
         }
+
+        window.addEventListener('deviceorientationabsolute', onProbe, true);
+        window.addEventListener('deviceorientation', onProbe, true);
+
+        // After 2.5s with no real data → no gyroscope
+        probeTimer = setTimeout(function () {
+          if (!probeReceived) {
+            window.removeEventListener('deviceorientationabsolute', onProbe, true);
+            window.removeEventListener('deviceorientation', onProbe, true);
+            showNoGyroNote();
+          }
+        }, 2500);
       }
 
       function showCompassPermBtn() {
@@ -3088,10 +3169,13 @@
         btn.addEventListener('click', function () {
           DeviceOrientationEvent.requestPermission().then(function (state) {
             if (state === 'granted') {
-              btn.remove();
-              attachOrientationListener();
+              btn.closest('div').remove();
+              // After permission granted, probe to confirm gyro actually works
+              probeGyroscope();
+            } else {
+              showNoGyroNote();
             }
-          }).catch(console.warn);
+          }).catch(function () { showNoGyroNote(); });
         });
         wrap.appendChild(btn);
         result.appendChild(wrap);
