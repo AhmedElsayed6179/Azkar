@@ -1520,6 +1520,20 @@
       animation: live-pulse 1.5s ease-in-out infinite;
     }
 
+    /* Static compass note for desktop/tablet */
+    #compassStaticNote {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      text-align: right;
+      direction: rtl;
+    }
+
+    #compassStaticNote i {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
     @keyframes live-pulse {
 
       0%,
@@ -3049,6 +3063,15 @@
           attachOrientationListener();
         }
         // Desktop / unsupported: needle stays at static bearing — already set by requestQibla
+        // Show informational note for web/tablet users
+        const resultEl = document.getElementById('qiblaResult');
+        if (resultEl && !document.getElementById('compassStaticNote')) {
+          const note = document.createElement('div');
+          note.id = 'compassStaticNote';
+          note.style.cssText = 'text-align:center;margin-top:12px;font-size:0.82rem;color:var(--gold,#c9a84c);opacity:0.85;padding:10px 14px;background:rgba(201,168,76,0.08);border-radius:12px;border:1px solid rgba(201,168,76,0.18);line-height:1.5;font-family:inherit;';
+          note.innerHTML = '<i class="fa-solid fa-compass" style="margin-left:6px;"></i> البوصلة الحية تعمل على الهاتف فقط — الاتجاه المعروض ثابت بناءً على موقعك الجغرافي';
+          resultEl.appendChild(note);
+        }
       }
 
       function showCompassPermBtn() {
