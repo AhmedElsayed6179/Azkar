@@ -124,24 +124,32 @@ function showToast(msg) {
     // Determine initial theme
     function getInitialTheme() {
         const saved = localStorage.getItem(STORAGE_KEY);
+
         if (saved) return saved;
+
         // Auto-detect by time: night = 18:00–06:00
         const h = new Date().getHours();
-        return (h >= 18 || h < 6) ? 'dark' : 'light';
+        const defaultTheme = (h >= 18 || h < 6) ? 'dark' : 'light';
+
+        localStorage.setItem(STORAGE_KEY, defaultTheme);
+
+        return defaultTheme;
     }
 
-    // Apply on load (immediately, before DOMContentLoaded to avoid flash)
-    applyTheme(getInitialTheme());
+    // ===== Apply immediately (before DOMContentLoaded) =====
+    const initialTheme = getInitialTheme();
+    applyTheme(initialTheme);
 
-    // Bind toggle buttons after DOM ready
+    // ===== Bind toggle buttons after DOM ready =====
     document.addEventListener('DOMContentLoaded', () => {
-        applyTheme(getInitialTheme()); // re-apply after DOM
+        applyTheme(initialTheme);
+
         document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
             btn.addEventListener('click', toggleTheme);
         });
     });
 
-    // Expose globally so azkar-morning page can also call it
+    // ===== Global exposure =====
     window.toggleGlobalTheme = toggleTheme;
     window.applyGlobalTheme = applyTheme;
     window.getGlobalTheme = () => localStorage.getItem(STORAGE_KEY) || 'light';
