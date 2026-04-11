@@ -2206,6 +2206,7 @@ body.night-mode .alert-toast i {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition: opacity 0.3s ease;
   padding: 20px;
@@ -2213,7 +2214,8 @@ body.night-mode .alert-toast i {
 
 .modal-overlay.open {
   opacity: 1;
-  pointer-events: all;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .modal-box {
@@ -2228,7 +2230,8 @@ body.night-mode .alert-toast i {
   box-shadow: var(--shadow-heavy);
 }
 
-body.night-mode .modal-box {
+body.night-mode .modal-box,
+body.evening-mode .modal-box {
   background: #0f1e30;
   color: var(--night-text);
 }
@@ -2257,7 +2260,8 @@ body.night-mode .modal-box {
   color: var(--day-primary);
 }
 
-body.night-mode .modal-title {
+body.night-mode .modal-title,
+body.evening-mode .modal-title {
   color: var(--gold-light);
 }
 
@@ -2268,7 +2272,8 @@ body.night-mode .modal-title {
   line-height: 1.7;
 }
 
-body.night-mode .modal-desc {
+body.night-mode .modal-desc,
+body.evening-mode .modal-desc {
   color: var(--night-subtext);
 }
 
@@ -3465,7 +3470,8 @@ body.night-mode .azkar-separator i {
   will-change: transform;
 }
 
-body.night-mode .sourceHidden {
+body.night-mode .sourceHidden,
+body.evening-mode .sourceHidden {
   background: #0f1e30;
   color: var(--night-text);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
